@@ -1,0 +1,11 @@
+include dash_calendar_timeline/dash_calendar_timeline.min.js
+include dash_calendar_timeline/dash_calendar_timeline.min.js.map
+include dash_calendar_timeline/async-*.js
+include dash_calendar_timeline/async-*.js.map
+include dash_calendar_timeline/*-shared.js
+include dash_calendar_timeline/*-shared.js.map
+include dash_calendar_timeline/metadata.json
+include dash_calendar_timeline/package-info.json
+include README.md
+include LICENSE
+include package.json
