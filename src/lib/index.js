@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import DashTimeline from './components/DashTimeline.react';
+import DashCalendarTimeline from './components/DashCalendarTimeline.react';
 
 export {
-    DashTimeline
+    DashCalendarTimeline
 };

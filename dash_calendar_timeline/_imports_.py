@@ -1,5 +1,5 @@
-from .DashTimeline import DashTimeline
+from .DashCalendarTimeline import DashCalendarTimeline
 
 __all__ = [
-    "DashTimeline"
+    "DashCalendarTimeline"
 ]

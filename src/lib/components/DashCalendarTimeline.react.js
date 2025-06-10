@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Timeline, { TimelineHeaders, SidebarHeader, DateHeader } from 'react-calendar-timeline';
-import 'react-calendar-timeline/lib/Timeline.css';
+import 'react-calendar-timeline/dist/style.css';
 import moment from "moment";
 
 /**
- * DashTimeline renders React's Calendar Timeline inside the Dash App.
+ * DashCalendarTimeline renders React's Calendar Timeline inside the Dash App.
  */
-export default function DashTimeline(props) {
+export default function DashCalendarTimeline(props) {
     const{
     id,
     setProps,
@@ -71,13 +71,15 @@ export default function DashTimeline(props) {
 
   const itemRenderer = ({ item, itemContext, getItemProps, getResizeProps }) => {
     const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
+    console.log(customItemsContent);
+    
     const backgroundColor = itemContext.selected 
                               ? (itemContext.dragging 
                                   ? draggingItemColor : selectedItemColor
                                 ) 
                               : getItemProps(item.itemProps).style.background;
     const borderResizing = itemContext.resizing ? resizingItemBorder : getItemProps(item.itemProps).style.border;
-
+  
     const modifiedItemProps = {
       ...getItemProps(item.itemProps),
       style: {
@@ -86,35 +88,41 @@ export default function DashTimeline(props) {
         border: borderResizing
       }
     };
+  
+    // Get the index of current item to access corresponding custom content
+    const itemIndex = items.findIndex(i => i.id === item.id);
+    const customContent = customItems && customItemsContent[itemIndex] 
+      ? customItemsContent[itemIndex] 
+      : null;
+  
     return (
       <div {...modifiedItemProps}>
         {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : ''}
         <div style={itemsStyle} className={itemsClass}>
-          {customItems
-            ? customItemsContent.find(
-                (content) => content.props._dashprivate_layout.props.id === item.id.toString()
-              )
+          {customItems && customContent
+            ? React.cloneElement(customContent, { item, itemContext })
             : itemContext.title}
         </div>
         {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : ''}
       </div>
-
     );
-    
-    
   };
-
+  
   const groupRenderer = ({ group }) => {
+    // Get the index of current group to access corresponding custom content
+    const groupIndex = groups.findIndex(g => g.id === group.id);
+    const customContent = customGroups && customGroupsContent[groupIndex] 
+      ? customGroupsContent[groupIndex] 
+      : null;
+  
     return (
       <div style={groupsStyle} className={groupsClass}>
-        {customGroups
-          ? customGroupsContent.find(
-              (content) => content.props._dashprivate_layout.props.id === group.id.toString()
-            )
+        {customGroups && customContent
+          ? React.cloneElement(customContent, { group })
           : group.title}
       </div>
-    )
-  };
+    );
+  }
 
   const handleItemMove = (itemId, dragTime, newGroupOrder) => {
     const updatedItems = items.map((item) =>
@@ -246,7 +254,7 @@ export default function DashTimeline(props) {
   );
 }
 
-DashTimeline.defaultProps = {
+DashCalendarTimeline.defaultProps = {
   groups: [{}],
   items: [{}],
   customGroupsContent: [],
@@ -260,7 +268,7 @@ DashTimeline.defaultProps = {
   clickData: {},
 };
 
-DashTimeline.propTypes = {
+DashCalendarTimeline.propTypes = {
     /**
      * The ID used to identify this component in Dash callbacks.
      */

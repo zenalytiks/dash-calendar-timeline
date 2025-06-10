@@ -1,12 +1,12 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
-export ''_dashtimeline
+export ''_dashcalendartimeline
 
 """
-    ''_dashtimeline(;kwargs...)
+    ''_dashcalendartimeline(;kwargs...)
 
-A DashTimeline component.
-DashTimeline renders React's Calendar Timeline inside the Dash App.
+A DashCalendarTimeline component.
+DashCalendarTimeline renders React's Calendar Timeline inside the Dash App.
 Keyword arguments:
 - `id` (String; optional): The ID used to identify this component in Dash callbacks.
 - `buffer` (Real; optional): a number (default to 3) which represents the extra timeline rendered on right and lift of the visible area which the user will scroll through before the time rerenders. Note: setting buffer to 1 will disable the scrolling on the timeline.
@@ -60,9 +60,9 @@ Default:
 - `visibleTimeEnd` (Real; optional): The exact ending viewport of the calendar.
 - `visibleTimeStart` (Real; optional): The exact starting viewport of the calendar.
 """
-function ''_dashtimeline(; kwargs...)
+function ''_dashcalendartimeline(; kwargs...)
         available_props = Symbol[:id, :buffer, :canChangeGroup, :canMove, :canResize, :clickData, :customGroups, :customGroupsContent, :customItems, :customItemsContent, :dateHeaderHeight, :dateHeaderLabelFormat, :dateHeaderStyle, :dateHeaderUnit, :defaultTimeEnd, :defaultTimeStart, :dragInfoLabel, :dragInfoLabelStyle, :draggingItemColor, :groups, :groupsClass, :groupsStyle, :itemHeightRatio, :items, :itemsClass, :itemsStyle, :lineHeight, :maxZoom, :minResizeWidth, :minZoom, :resizingItemBorder, :rightSidebarWidth, :selectedItemColor, :sidebarHeaderContent, :sidebarHeaderVariant, :sidebarWidth, :timeSteps, :timelineHeaderStyle, :traditionalZoom, :useResizeHandle, :visibleTimeEnd, :visibleTimeStart]
         wild_props = Symbol[]
-        return Component("''_dashtimeline", "DashTimeline", "dash_calendar_timeline", available_props, wild_props; kwargs...)
+        return Component("''_dashcalendartimeline", "DashCalendarTimeline", "dash_calendar_timeline", available_props, wild_props; kwargs...)
 end
 

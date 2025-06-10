@@ -1,16 +1,16 @@
 % Auto-generated: do not edit by hand
-\name{''DashTimeline}
+\name{''DashCalendarTimeline}
 
-\alias{''DashTimeline}
+\alias{''DashCalendarTimeline}
 
-\title{DashTimeline component}
+\title{DashCalendarTimeline component}
 
 \description{
-DashTimeline renders React's Calendar Timeline inside the Dash App.
+DashCalendarTimeline renders React's Calendar Timeline inside the Dash App.
 }
 
 \usage{
-''DashTimeline(id=NULL, buffer=NULL, canChangeGroup=NULL, canMove=NULL,
+''DashCalendarTimeline(id=NULL, buffer=NULL, canChangeGroup=NULL, canMove=NULL,
 canResize=NULL, clickData=NULL, customGroups=NULL,
 customGroupsContent=NULL, customItems=NULL,
 customItemsContent=NULL, dateHeaderHeight=NULL,

@@ -1,32 +1,24 @@
 /* eslint no-magic-numbers: 0 */
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 
-import { Timeline } from '../lib';
+import { DashCalendarTimeline } from '../lib';
 
-class App extends Component {
+const App = () => {
 
-    constructor() {
-        super();
-        this.state = {
-            value: ''
+    const [state, setState] = useState({value:'', label:'Type Here'});
+    const setProps = (newProps) => {
+            setState(newProps);
         };
-        this.setProps = this.setProps.bind(this);
-    }
 
-    setProps(newProps) {
-        this.setState(newProps);
-    }
+    return (
+        <div>
+            <DashCalendarTimeline
+                setProps={setProps}
+                {...state}
+            />
+        </div>
+    )
+};
 
-    render() {
-        return (
-            <div>
-                <Timeline
-                    setProps={this.setProps}
-                    {...this.state}
-                />
-            </div>
-        )
-    }
-}
 
 export default App;

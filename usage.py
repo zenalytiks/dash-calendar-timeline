@@ -5,7 +5,7 @@ from dash import html,dcc,Input,Output,State
 import dash_bootstrap_components as dbc
 from datetime import datetime, time
 import os
-from dash_calendar_timeline import DashTimeline
+from dash_calendar_timeline import DashCalendarTimeline
 
 
 app = dash.Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP],
@@ -52,7 +52,7 @@ app.layout = dbc.Container(
                             date=datetime(min_date.year,min_date.month,min_date.day),
                             style={'zIndex':100}
                         ),
-                        DashTimeline(
+                        DashCalendarTimeline(
                             id='schedule',
                             defaultTimeStart=(df['start_time'].astype('int64') / 10**6).min(),
                             defaultTimeEnd=(df['start_time'].astype('int64') / 10**6).min() + 24 * 60 * 60 * 1000,
@@ -204,7 +204,7 @@ def update_schedule(click_data,date_value):
 
                               ],width=4,className='text-center',style={'height':'100%'}
                         )
-                  ],className='g-0',style={'width':'100%','height':'100%'},justify='center',id= str(game['Column1.id'][0])
+                  ],className='g-0',style={'width':'100%','height':'100%'},justify='center'
             ))
         groups.append({
           'id': group_id,
@@ -216,7 +216,7 @@ def update_schedule(click_data,date_value):
             html.Div(
                   [
                         html.Img(src=network_logo,style={"max-width":'100%','max-height':'100%'})
-                  ],style={'width':'100%','height':'100%'},className='text-center', id= str(group_id)
+                  ],style={'width':'100%','height':'100%'},className='text-center'
             )
         )
     customItemsStyle={'height':'100%','width':'100%'}
@@ -234,4 +234,4 @@ def update_schedule(click_data,date_value):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run(debug=True)

@@ -1,11 +1,26 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
+import typing  # noqa: F401
+from typing_extensions import TypedDict, NotRequired, Literal # noqa: F401
 from dash.development.base_component import Component, _explicitize_args
 
+ComponentType = typing.Union[
+    str,
+    int,
+    float,
+    Component,
+    None,
+    typing.Sequence[typing.Union[str, int, float, Component, None]],
+]
 
-class DashTimeline(Component):
-    """A DashTimeline component.
-DashTimeline renders React's Calendar Timeline inside the Dash App.
+NumberType = typing.Union[
+    typing.SupportsFloat, typing.SupportsInt, typing.SupportsComplex
+]
+
+
+class DashCalendarTimeline(Component):
+    """A DashCalendarTimeline component.
+DashCalendarTimeline renders React's Calendar Timeline inside the Dash App.
 
 Keyword arguments:
 
@@ -170,9 +185,55 @@ Keyword arguments:
     _children_props = ['customItemsContent', 'customGroupsContent', 'sidebarHeaderContent']
     _base_nodes = ['customItemsContent', 'customGroupsContent', 'sidebarHeaderContent', 'children']
     _namespace = 'dash_calendar_timeline'
-    _type = 'DashTimeline'
-    @_explicitize_args
-    def __init__(self, id=Component.UNDEFINED, groups=Component.UNDEFINED, items=Component.UNDEFINED, defaultTimeStart=Component.UNDEFINED, defaultTimeEnd=Component.UNDEFINED, visibleTimeStart=Component.UNDEFINED, visibleTimeEnd=Component.UNDEFINED, buffer=Component.UNDEFINED, sidebarWidth=Component.UNDEFINED, rightSidebarWidth=Component.UNDEFINED, minResizeWidth=Component.UNDEFINED, lineHeight=Component.UNDEFINED, itemHeightRatio=Component.UNDEFINED, minZoom=Component.UNDEFINED, maxZoom=Component.UNDEFINED, canMove=Component.UNDEFINED, canChangeGroup=Component.UNDEFINED, canResize=Component.UNDEFINED, useResizeHandle=Component.UNDEFINED, traditionalZoom=Component.UNDEFINED, timeSteps=Component.UNDEFINED, customItems=Component.UNDEFINED, customGroups=Component.UNDEFINED, customItemsContent=Component.UNDEFINED, selectedItemColor=Component.UNDEFINED, draggingItemColor=Component.UNDEFINED, resizingItemBorder=Component.UNDEFINED, itemsStyle=Component.UNDEFINED, itemsClass=Component.UNDEFINED, customGroupsContent=Component.UNDEFINED, groupsStyle=Component.UNDEFINED, groupsClass=Component.UNDEFINED, dragInfoLabel=Component.UNDEFINED, dragInfoLabelStyle=Component.UNDEFINED, sidebarHeaderVariant=Component.UNDEFINED, sidebarHeaderContent=Component.UNDEFINED, timelineHeaderStyle=Component.UNDEFINED, dateHeaderStyle=Component.UNDEFINED, dateHeaderUnit=Component.UNDEFINED, dateHeaderLabelFormat=Component.UNDEFINED, dateHeaderHeight=Component.UNDEFINED, clickData=Component.UNDEFINED, **kwargs):
+    _type = 'DashCalendarTimeline'
+
+
+    def __init__(
+        self,
+        id: typing.Optional[typing.Union[str, dict]] = None,
+        groups: typing.Optional[typing.Sequence] = None,
+        items: typing.Optional[typing.Sequence] = None,
+        defaultTimeStart: typing.Optional[NumberType] = None,
+        defaultTimeEnd: typing.Optional[NumberType] = None,
+        visibleTimeStart: typing.Optional[NumberType] = None,
+        visibleTimeEnd: typing.Optional[NumberType] = None,
+        buffer: typing.Optional[NumberType] = None,
+        sidebarWidth: typing.Optional[NumberType] = None,
+        rightSidebarWidth: typing.Optional[NumberType] = None,
+        minResizeWidth: typing.Optional[NumberType] = None,
+        lineHeight: typing.Optional[NumberType] = None,
+        itemHeightRatio: typing.Optional[NumberType] = None,
+        minZoom: typing.Optional[NumberType] = None,
+        maxZoom: typing.Optional[NumberType] = None,
+        canMove: typing.Optional[bool] = None,
+        canChangeGroup: typing.Optional[bool] = None,
+        canResize: typing.Optional[typing.Union[str, bool]] = None,
+        useResizeHandle: typing.Optional[bool] = None,
+        traditionalZoom: typing.Optional[bool] = None,
+        timeSteps: typing.Optional[dict] = None,
+        customItems: typing.Optional[bool] = None,
+        customGroups: typing.Optional[bool] = None,
+        customItemsContent: typing.Optional[ComponentType] = None,
+        selectedItemColor: typing.Optional[str] = None,
+        draggingItemColor: typing.Optional[str] = None,
+        resizingItemBorder: typing.Optional[str] = None,
+        itemsStyle: typing.Optional[dict] = None,
+        itemsClass: typing.Optional[str] = None,
+        customGroupsContent: typing.Optional[ComponentType] = None,
+        groupsStyle: typing.Optional[dict] = None,
+        groupsClass: typing.Optional[str] = None,
+        dragInfoLabel: typing.Optional[bool] = None,
+        dragInfoLabelStyle: typing.Optional[dict] = None,
+        sidebarHeaderVariant: typing.Optional[str] = None,
+        sidebarHeaderContent: typing.Optional[ComponentType] = None,
+        timelineHeaderStyle: typing.Optional[dict] = None,
+        dateHeaderStyle: typing.Optional[dict] = None,
+        dateHeaderUnit: typing.Optional[str] = None,
+        dateHeaderLabelFormat: typing.Optional[str] = None,
+        dateHeaderHeight: typing.Optional[NumberType] = None,
+        clickData: typing.Optional[dict] = None,
+        **kwargs
+    ):
         self._prop_names = ['id', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'clickData', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemHeightRatio', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart']
         self._valid_wildcard_attributes =            []
         self.available_properties = ['id', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'clickData', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemHeightRatio', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart']
@@ -182,4 +243,6 @@ Keyword arguments:
         _locals.update(kwargs)  # For wildcard attrs and excess named props
         args = {k: _locals[k] for k in _explicit_args}
 
-        super(DashTimeline, self).__init__(**args)
+        super(DashCalendarTimeline, self).__init__(**args)
+
+setattr(DashCalendarTimeline, "__init__", _explicitize_args(DashCalendarTimeline.__init__))

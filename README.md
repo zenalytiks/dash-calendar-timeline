@@ -2,6 +2,8 @@
 
 Dash Calendar Timeline is a Dash component library.
 
+A custom component for rendering react-calendar-timeline in Dash Apps.
+
 Get started with:
 1. Install Dash and its dependencies: https://dash.plotly.com/installation
 2. Run `python usage.py`
@@ -35,7 +37,7 @@ If you have selected install_dependencies during the prompt, you can skip this p
     $ pip install -r tests/requirements.txt
     ```
 
-### Write your component code in `src/lib/components/Timeline.react.js`.
+### Write your component code in `src/lib/components/DashCalendarTimeline.react.js`.
 
 - The demo app is in `src/demo` and you will import your example component code into your demo app.
 - Test your code in a Python environment:
