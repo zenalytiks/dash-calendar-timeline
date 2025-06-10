@@ -100,8 +100,8 @@ app.layout = dbc.Container(
 @app.callback(
       [Output('schedule','groups'),
       Output('schedule','items'),
-      # Output('schedule','visibleTimeStart'),
-      # Output('schedule','visibleTimeEnd'),
+      Output('schedule','visibleTimeStart'),
+      Output('schedule','visibleTimeEnd'),
       Output('schedule','customGroupsContent'),
       Output('schedule','customItemsContent'),
       Output('schedule','itemsStyle'),
@@ -222,8 +222,8 @@ def update_schedule(click_data,date_value):
     customItemsStyle={'height':'100%','width':'100%'}
     customGroupsStyle={'height':'100%','width':'100%'}
     return [groups,items,
-            # df_filtered_by_date['start_time'].min(),
-            # df_filtered_by_date['end_time'].max(),
+            df_filtered_by_date['start_time'].min(),
+            df_filtered_by_date['end_time'].max(),
             customGroupsContent,
             customItemsContent,
             customItemsStyle,

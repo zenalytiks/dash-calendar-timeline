@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Timeline, { TimelineHeaders, SidebarHeader, DateHeader } from 'react-calendar-timeline';
 import 'react-calendar-timeline/dist/style.css';
@@ -57,6 +57,72 @@ export default function DashCalendarTimeline(props) {
 
   const [draggedItem, setDraggedItem] = useState(undefined);
   
+  // Local state to maintain current items with all modifications
+  const [currentItems, setCurrentItems] = useState(items);
+  
+  // Track if we've made local modifications
+  const [hasLocalModifications, setHasLocalModifications] = useState(false);
+  
+  // Keep track of the last received items to detect real changes
+  const [lastReceivedItems, setLastReceivedItems] = useState(items);
+
+  // Local state for visible time range - this enables user scrolling
+  const [localVisibleTimeStart, setLocalVisibleTimeStart] = useState(visibleTimeStart || defaultTimeStart);
+  const [localVisibleTimeEnd, setLocalVisibleTimeEnd] = useState(visibleTimeEnd || defaultTimeEnd);
+
+  // Track if the visible time props have changed (indicating programmatic scroll)
+  const [lastVisibleTimeStart, setLastVisibleTimeStart] = useState(visibleTimeStart);
+  const [lastVisibleTimeEnd, setLastVisibleTimeEnd] = useState(visibleTimeEnd);
+
+  // Function to check if items have meaningfully changed (not just a re-render)
+  const itemsHaveChanged = (newItems, oldItems) => {
+    if (newItems.length !== oldItems.length) return true;
+    
+    // Check if item IDs are different (indicating filtering or new data)
+    const newIds = new Set(newItems.map(item => item.id));
+    const oldIds = new Set(oldItems.map(item => item.id));
+    
+    if (newIds.size !== oldIds.size) return true;
+    
+    for (let id of newIds) {
+      if (!oldIds.has(id)) return true;
+    }
+    
+    return false;
+  };
+
+  // Update local state when props.items changes meaningfully
+  useEffect(() => {
+    const itemsChanged = itemsHaveChanged(items, lastReceivedItems);
+    
+    if (itemsChanged) {
+      // Reset everything when we get genuinely new items (like from filtering)
+      setCurrentItems(items);
+      setHasLocalModifications(false);
+      setLastReceivedItems(items);
+    } else if (!hasLocalModifications) {
+      // Only update if we haven't made local modifications and items haven't changed
+      setCurrentItems(items);
+      setLastReceivedItems(items);
+    }
+  }, [items, hasLocalModifications, lastReceivedItems]);
+
+  // Handle changes to visibleTimeStart/End props (programmatic scrolling)
+  useEffect(() => {
+    // Only update if the props have meaningfully changed (not just a re-render with same values)
+    const timeStartChanged = visibleTimeStart !== lastVisibleTimeStart && visibleTimeStart !== localVisibleTimeStart;
+    const timeEndChanged = visibleTimeEnd !== lastVisibleTimeEnd && visibleTimeEnd !== localVisibleTimeEnd;
+    
+    if ((timeStartChanged || timeEndChanged) && visibleTimeStart && visibleTimeEnd) {
+      // Only update if both values are provided and they're actually different
+      setLocalVisibleTimeStart(visibleTimeStart);
+      setLocalVisibleTimeEnd(visibleTimeEnd);
+    }
+    
+    // Always update the "last" values to track what we've seen
+    setLastVisibleTimeStart(visibleTimeStart);
+    setLastVisibleTimeEnd(visibleTimeEnd);
+  }, [visibleTimeStart, visibleTimeEnd, lastVisibleTimeStart, lastVisibleTimeEnd, localVisibleTimeStart, localVisibleTimeEnd]);
 
   const handleItemClick = (itemId, e, time) => {
     const updatedClickData = {
@@ -64,9 +130,23 @@ export default function DashCalendarTimeline(props) {
       time
     };
 
+    // Only update clickData, don't include visible time props to avoid conflicts
     setProps({
       clickData: updatedClickData
     });
+  };
+
+  // Handle time changes (both user scrolling and programmatic)
+  const handleTimeChange = (newVisibleTimeStart, newVisibleTimeEnd, updateScrollCanvas) => {
+    // Update local state to allow user scrolling
+    setLocalVisibleTimeStart(newVisibleTimeStart);
+    setLocalVisibleTimeEnd(newVisibleTimeEnd);
+    
+    // Call updateScrollCanvas to actually update the timeline
+    updateScrollCanvas(newVisibleTimeStart, newVisibleTimeEnd);
+    
+    // Don't automatically update parent props here to avoid conflicts
+    // Only update parent when explicitly needed (like filtering)
   };
 
   const itemRenderer = ({ item, itemContext, getItemProps, getResizeProps }) => {
@@ -90,7 +170,7 @@ export default function DashCalendarTimeline(props) {
     };
   
     // Get the index of current item to access corresponding custom content
-    const itemIndex = items.findIndex(i => i.id === item.id);
+    const itemIndex = currentItems.findIndex(i => i.id === item.id);
     const customContent = customItems && customItemsContent[itemIndex] 
       ? customItemsContent[itemIndex] 
       : null;
@@ -125,7 +205,7 @@ export default function DashCalendarTimeline(props) {
   }
 
   const handleItemMove = (itemId, dragTime, newGroupOrder) => {
-    const updatedItems = items.map((item) =>
+    const updatedItems = currentItems.map((item) =>
       item.id === itemId
         ? {
             ...item,
@@ -136,6 +216,13 @@ export default function DashCalendarTimeline(props) {
         : item
     );
 
+    // Update local state immediately
+    setCurrentItems(updatedItems);
+    
+    // Mark that we have local modifications
+    setHasLocalModifications(true);
+    
+    // Only update items, let the timeline maintain its current view
     setProps({items: updatedItems});
     setDraggedItem(undefined);
 
@@ -143,7 +230,7 @@ export default function DashCalendarTimeline(props) {
   };
 
   const handleItemResize = (itemId, time, edge) => {
-    const updatedItems = items.map((item) =>
+    const updatedItems = currentItems.map((item) =>
       item.id === itemId
         ? {
             ...item,
@@ -153,6 +240,13 @@ export default function DashCalendarTimeline(props) {
         : item
     );
 
+    // Update local state immediately
+    setCurrentItems(updatedItems);
+    
+    // Mark that we have local modifications
+    setHasLocalModifications(true);
+    
+    // Only update items, let the timeline maintain its current view
     setProps({items: updatedItems});
     setDraggedItem(undefined);
 
@@ -187,7 +281,7 @@ export default function DashCalendarTimeline(props) {
   const handleItemDrag = ({ eventType, itemId, time, edge, newGroupOrder }) => {
     let item = draggedItem ? draggedItem.item : undefined;
     if (!item) {
-      item = items.find(i => i.id === itemId);
+      item = currentItems.find(i => i.id === itemId);
     }
     setDraggedItem({ item, group: groups[newGroupOrder], time });
   };
@@ -196,11 +290,11 @@ export default function DashCalendarTimeline(props) {
       <div id={id}>
           <Timeline
             groups={groups}
-            items={items}
+            items={currentItems}
             defaultTimeStart={defaultTimeStart}
             defaultTimeEnd={defaultTimeEnd}
-            visibleTimeStart={visibleTimeStart}
-            visibleTimeEnd={visibleTimeEnd}
+            visibleTimeStart={localVisibleTimeStart}
+            visibleTimeEnd={localVisibleTimeEnd}
             buffer={buffer}
             sidebarWidth={sidebarWidth}
             rightSidebarWidth={rightSidebarWidth}
@@ -216,10 +310,10 @@ export default function DashCalendarTimeline(props) {
             traditionalZoom={traditionalZoom}
             timeSteps={timeSteps}
             onItemClick={handleItemClick}
-            // onItemSelect={handleItemClick}
             onItemMove={handleItemMove}
             onItemResize={handleItemResize}
             onItemDrag={handleItemDrag}
+            onTimeChange={handleTimeChange}
             itemRenderer = {itemRenderer}
             groupRenderer = {groupRenderer}
 
