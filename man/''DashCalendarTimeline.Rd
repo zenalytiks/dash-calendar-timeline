@@ -10,27 +10,34 @@ DashCalendarTimeline renders React's Calendar Timeline inside the Dash App.
 }
 
 \usage{
-''DashCalendarTimeline(id=NULL, buffer=NULL, canChangeGroup=NULL, canMove=NULL,
-canResize=NULL, clickData=NULL, customGroups=NULL,
-customGroupsContent=NULL, customItems=NULL,
-customItemsContent=NULL, dateHeaderHeight=NULL,
-dateHeaderLabelFormat=NULL, dateHeaderStyle=NULL,
-dateHeaderUnit=NULL, defaultTimeEnd=NULL,
-defaultTimeStart=NULL, dragInfoLabel=NULL,
-dragInfoLabelStyle=NULL, draggingItemColor=NULL,
-groups=NULL, groupsClass=NULL, groupsStyle=NULL,
-itemHeightRatio=NULL, items=NULL, itemsClass=NULL,
+''DashCalendarTimeline(id=NULL, boundsChangeData=NULL, buffer=NULL,
+canChangeGroup=NULL, canMove=NULL, canResize=NULL,
+canvasClickData=NULL, canvasContextMenuData=NULL,
+canvasDoubleClickData=NULL, clickTolerance=NULL,
+customGroups=NULL, customGroupsContent=NULL,
+customItems=NULL, customItemsContent=NULL,
+dateHeaderHeight=NULL, dateHeaderLabelFormat=NULL,
+dateHeaderStyle=NULL, dateHeaderUnit=NULL,
+defaultTimeEnd=NULL, defaultTimeStart=NULL,
+dragInfoLabel=NULL, dragInfoLabelStyle=NULL, dragSnap=NULL,
+draggingItemColor=NULL, groups=NULL, groupsClass=NULL,
+groupsStyle=NULL, itemClickData=NULL,
+itemContextMenuData=NULL, itemDoubleClickData=NULL,
+itemHeightRatio=NULL, itemSelectData=NULL,
+itemTouchSendsClick=NULL, items=NULL, itemsClass=NULL,
 itemsStyle=NULL, lineHeight=NULL, maxZoom=NULL,
 minResizeWidth=NULL, minZoom=NULL, resizingItemBorder=NULL,
 rightSidebarWidth=NULL, selectedItemColor=NULL,
 sidebarHeaderContent=NULL, sidebarHeaderVariant=NULL,
 sidebarWidth=NULL, timeSteps=NULL, timelineHeaderStyle=NULL,
 traditionalZoom=NULL, useResizeHandle=NULL,
-visibleTimeEnd=NULL, visibleTimeStart=NULL)
+visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
 }
 
 \arguments{
 \item{id}{Character. The ID used to identify this component in Dash callbacks.}
+
+\item{boundsChangeData}{Named list. Called when the bounds in the calendar's canvas change. Use it for example to load new data to display. (see "Behind the scenes" below). canvasTimeStart and canvasTimeEnd are unix timestamps in milliseconds.}
 
 \item{buffer}{Numeric. a number (default to 3) which represents the extra timeline rendered on right and lift of the visible area which the user will scroll through before the time rerenders. Note: setting buffer to 1 will disable the scrolling on the timeline.}
 
@@ -40,7 +47,13 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL)
 
 \item{canResize}{Character | logical. Can items be resized? Can be overridden in the items array. Accepted values: false, "left", "right", "both". Defaults to "right". If you pass true, it will be treated as "right" to not break compatibility with versions 0.9 and below.}
 
-\item{clickData}{Named list. Returns the Item ID and time for the item clicked.}
+\item{canvasClickData}{Named list. Called when an empty spot on the canvas was clicked. Get the group ID and the time as arguments. For example open a "new item" window after this.}
+
+\item{canvasContextMenuData}{Named list. Called when the canvas is clicked by the right button of the mouse. Note: If this property is set the default context menu doesn't appear.}
+
+\item{canvasDoubleClickData}{Named list. Called when an empty spot on the canvas was double clicked. Get the group ID and the time as arguments.}
+
+\item{clickTolerance}{Numeric. How many pixels we can drag the background for it to be counted as a click on the background. Default 3.}
 
 \item{customGroups}{Logical. This will determine whether you'd want to set up custom content for groups or not.}
 
@@ -66,6 +79,8 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL)
 
 \item{dragInfoLabelStyle}{Named list. Style applied to the dragInfoLabel.}
 
+\item{dragSnap}{Numeric. Snapping unit when dragging items. Defaults to 15 * 60 * 1000 or 15min. When so, the items will snap to 15min intervals when dragging.}
+
 \item{draggingItemColor}{Character. Item color while the item is being dragged around.}
 
 \item{groups}{Unnamed list. The groups are used to determine the number of groups in a Timeline.}
@@ -74,7 +89,17 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL)
 
 \item{groupsStyle}{Named list. This will be used to set up custom css style of content of groups in the sidebar.}
 
+\item{itemClickData}{Named list. Called when an item is clicked. Note: the item must be selected before it's clicked... except if it's a touch event and itemTouchSendsClick is enabled. time is the time that corresponds to where you click on the item in the timeline.}
+
+\item{itemContextMenuData}{Named list. Called when the item is clicked by the right button of the mouse. time is the time that corresponds to where you context click on the item in the timeline. Note: If this property is set the default context menu doesn't appear.}
+
+\item{itemDoubleClickData}{Named list. Called when an item was double clicked. time is the time that corresponds to where you double click on the item in the timeline.}
+
 \item{itemHeightRatio}{Numeric. What percentage of the height of the line is taken by the item? Default 0.65}
+
+\item{itemSelectData}{Named list. This is sent on the first click on an item. time is the time that corresponds to where you click/select on the item in the timeline.}
+
+\item{itemTouchSendsClick}{Logical. Normally tapping (touching) an item selects it. If this is set to true, a tap will have the same effect, as selecting with the first click and then clicking again to open and send the onItemClick event. Defaults to false.}
 
 \item{items}{Unnamed list. The items are used to determine the number of items within a single group.}
 
@@ -122,6 +147,8 @@ Default:
 \item{visibleTimeEnd}{Numeric. The exact ending viewport of the calendar.}
 
 \item{visibleTimeStart}{Numeric. The exact starting viewport of the calendar.}
+
+\item{zoomData}{Named list. Called when the timeline is zoomed, either via mouse/pinch zoom or clicking header to change timeline units.}
 }
 
 \value{named list of JSON elements corresponding to React.js properties and their values}

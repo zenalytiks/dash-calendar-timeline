@@ -21,15 +21,18 @@ export default function DashCalendarTimeline(props) {
     sidebarWidth,
     rightSidebarWidth,
     minResizeWidth,
+    dragSnap,
     lineHeight,
     itemHeightRatio,
     minZoom,
     maxZoom,
+    clickTolerance,
     canMove,
     canChangeGroup,
     canResize,
     useResizeHandle,
     traditionalZoom,
+    itemTouchSendsClick,
     timeSteps,
     customItems,
     customGroups,
@@ -52,7 +55,15 @@ export default function DashCalendarTimeline(props) {
     dateHeaderLabelFormat,
     dateHeaderHeight,
     // eslint-disable-next-line no-unused-vars
-    clickData
+    itemClickData,
+    itemDoubleClickData,
+    itemContextMenuData,
+    itemSelectData,
+    canvasClickData,
+    canvasDoubleClickData,
+    canvasContextMenuData,
+    zoomData,
+    boundsChangeData
   } = props;
 
   const [draggedItem, setDraggedItem] = useState(undefined);
@@ -132,8 +143,105 @@ export default function DashCalendarTimeline(props) {
 
     // Only update clickData, don't include visible time props to avoid conflicts
     setProps({
-      clickData: updatedClickData
+      itemClickData: updatedClickData
     });
+  };
+
+  const handleItemDoubleClick = (itemId, e, time) => {
+    const updatedDoubleClickData = {
+      itemId,
+      time
+    };
+
+    setProps({
+      itemDoubleClickData: updatedDoubleClickData
+    })
+  };
+
+  const handleItemContextMenu = (itemId, e, time) => {
+    const updatedContextMenu = {
+      itemId,
+      time
+    };
+
+    setProps({
+      itemContextMenuData: updatedContextMenu
+    })
+  };
+
+  const handleItemSelect = (itemId, e, time) => {
+    const updatedSelectData = {
+      itemId,
+      time
+    };
+
+    setProps({
+      itemSelectData: updatedSelectData
+    })
+  };
+
+  const handleCanvasClick = (groupId, e, time) => {
+    const updatedCanvasClickData = {
+      groupId,
+      time
+    };
+
+    setProps({
+      canvasClickData: updatedCanvasClickData
+    })
+  };
+
+  const handleCanvasDoubleClick = (groupId, e, time) => {
+    const updatedCanvasDoubleClickData = {
+      groupId,
+      time
+    };
+
+    setProps({
+      canvasDoubleClickData: updatedCanvasDoubleClickData
+    })
+  };
+
+  const handleCanvasContextMenu = (groupId, e, time) => {
+    const updatedCanvasContextMenuData = {
+      groupId,
+      time
+    };
+
+    setProps({
+      canvasContextMenuData: updatedCanvasContextMenuData
+    })
+  };
+
+  const handleZoom = (timelineContext, unit) => {
+    const zoomVisibleTimeEnd = timelineContext.visibleTimeEnd
+    const zoomVisibleTimeStart = timelineContext.visibleTimeStart
+    const zoomTimelineWidth = timelineContext.timelineWidth
+    const zoomCanvasTimeStart = timelineContext.canvasTimeStart
+    const zoomCanvasTimeEnd = timelineContext.canvasTimeEnd
+    const updatedZoomData = {
+      zoomTimelineWidth,
+      zoomVisibleTimeStart,
+      zoomVisibleTimeEnd,
+      zoomCanvasTimeStart,
+      zoomCanvasTimeEnd,
+      unit
+    };
+
+    setProps({
+      zoomData: updatedZoomData
+    })
+  };
+
+  const handleBoundsChange = (canvasTimeStart, canvasTimeEnd) => {
+    const updatedBoundsChangeData = {
+      canvasTimeStart,
+      canvasTimeEnd
+    };
+
+    setProps({
+      boundsChangeData: updatedBoundsChangeData
+    })
   };
 
   // Handle time changes (both user scrolling and programmatic)
@@ -299,21 +407,32 @@ export default function DashCalendarTimeline(props) {
             sidebarWidth={sidebarWidth}
             rightSidebarWidth={rightSidebarWidth}
             minResizeWidth={minResizeWidth}
+            dragSnap={dragSnap}
             lineHeight={lineHeight}
             itemHeightRatio={itemHeightRatio}
             minZoom={minZoom}
             maxZoom={maxZoom}
+            clickTolerance={clickTolerance}
             canMove={canMove}
             canChangeGroup={canChangeGroup}
             canResize={canResize}
             useResizeHandle={useResizeHandle}
             traditionalZoom={traditionalZoom}
+            itemTouchSendsClick={itemTouchSendsClick}
             timeSteps={timeSteps}
+            onItemSelect={handleItemSelect}
             onItemClick={handleItemClick}
+            onItemDoubleClick={handleItemDoubleClick}
+            onItemContextMenu={handleItemContextMenu}
+            onCanvasClick={handleCanvasClick}
+            onCanvasDoubleClick={handleCanvasDoubleClick}
+            onCanvasContextMenu={handleCanvasContextMenu}
+            onZoom={handleZoom}
             onItemMove={handleItemMove}
             onItemResize={handleItemResize}
             onItemDrag={handleItemDrag}
             onTimeChange={handleTimeChange}
+            onBoundsChange={handleBoundsChange}
             itemRenderer = {itemRenderer}
             groupRenderer = {groupRenderer}
 
@@ -359,7 +478,6 @@ DashCalendarTimeline.defaultProps = {
   selectedItemColor: "#1a6fb3",
   resizingItemBorder: "2px solid red",
   dragInfoLabel: false,
-  clickData: {},
 };
 
 DashCalendarTimeline.propTypes = {
@@ -414,6 +532,11 @@ DashCalendarTimeline.propTypes = {
     rightSidebarWidth: PropTypes.number,
 
     /**
+     * Snapping unit when dragging items. Defaults to 15 * 60 * 1000 or 15min. When so, the items will snap to 15min intervals when dragging.
+     */
+    dragSnap: PropTypes.number,
+
+    /**
      * The minimum width, in pixels, of a timeline entry when it's possible to resize. If not reached, you must zoom in to resize more. Default to 20.
      */
     minResizeWidth: PropTypes.number,
@@ -437,6 +560,11 @@ DashCalendarTimeline.propTypes = {
      * Largest time the calendar can zoom to in milliseconds. Default 5 * 365.24 * 86400 * 1000 (5 years)
      */
     maxZoom: PropTypes.number,
+
+    /**
+     * How many pixels we can drag the background for it to be counted as a click on the background. Default 3.
+     */
+    clickTolerance: PropTypes.number,
 
     /**
      * Can items be dragged around? Can be overridden in the items array. Defaults to true
@@ -465,6 +593,11 @@ DashCalendarTimeline.propTypes = {
      * Zoom in when scrolling the mouse up/down. Defaults to false.
      */
     traditionalZoom: PropTypes.bool,
+
+    /**
+     * Normally tapping (touching) an item selects it. If this is set to true, a tap will have the same effect, as selecting with the first click and then clicking again to open and send the onItemClick event. Defaults to false.
+     */
+    itemTouchSendsClick: PropTypes.bool,
 
     /**
      * With what step to display different units. E.g. 15 for minute means only minutes 0, 15, 30 and 45 will be shown.
@@ -581,9 +714,49 @@ DashCalendarTimeline.propTypes = {
     dateHeaderHeight: PropTypes.number,
 
     /**
-     * Returns the Item ID and time for the item clicked.
+     * Called when an item is clicked. Note: the item must be selected before it's clicked... except if it's a touch event and itemTouchSendsClick is enabled. time is the time that corresponds to where you click on the item in the timeline.
      */
-    clickData: PropTypes.object,
+    itemClickData: PropTypes.object,
+
+    /**
+     * Called when an item was double clicked. time is the time that corresponds to where you double click on the item in the timeline.
+     */
+    itemDoubleClickData: PropTypes.object,
+
+    /**
+     * Called when the item is clicked by the right button of the mouse. time is the time that corresponds to where you context click on the item in the timeline. Note: If this property is set the default context menu doesn't appear.
+     */
+    itemContextMenuData: PropTypes.object,
+
+    /**
+     * This is sent on the first click on an item. time is the time that corresponds to where you click/select on the item in the timeline.
+     */
+    itemSelectData: PropTypes.object,
+
+    /**
+     * Called when an empty spot on the canvas was clicked. Get the group ID and the time as arguments. For example open a "new item" window after this.
+     */
+    canvasClickData: PropTypes.object,
+
+    /**
+     * Called when an empty spot on the canvas was double clicked. Get the group ID and the time as arguments.
+     */
+    canvasDoubleClickData: PropTypes.object,
+
+    /**
+     * Called when the canvas is clicked by the right button of the mouse. Note: If this property is set the default context menu doesn't appear.
+     */
+    canvasContextMenuData:PropTypes.object,
+
+    /**
+     * Called when the timeline is zoomed, either via mouse/pinch zoom or clicking header to change timeline units.
+     */
+    zoomData: PropTypes.object,
+
+    /**
+     * Called when the bounds in the calendar's canvas change. Use it for example to load new data to display. (see "Behind the scenes" below). canvasTimeStart and canvasTimeEnd are unix timestamps in milliseconds.
+     */
+    boundsChangeData: PropTypes.object,
 
     /**
      * Dash-assigned callback that should be called to report property changes

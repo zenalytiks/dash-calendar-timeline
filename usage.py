@@ -59,6 +59,7 @@ app.layout = dbc.Container(
                             sidebarWidth=100,
                             lineHeight=50,
                             itemHeightRatio=1,
+                        #     dragSnap=15 * 60 * 1000,
                             maxZoom=24 * 60 * 60 * 1000,
                         #     minZoom=24 * 60 * 60 * 1000,
                             canMove=True,
@@ -73,6 +74,7 @@ app.layout = dbc.Container(
                             customGroups=True,
                             customItems=True,
                             dragInfoLabel=True,
+                            traditionalZoom=False,
                             selectedItemColor='rgba(50, 245, 39, 0.5)',
                         #     draggingItemColor="purple",
                         #     resizingItemBorder="2px solid black"
@@ -106,7 +108,7 @@ app.layout = dbc.Container(
       Output('schedule','customItemsContent'),
       Output('schedule','itemsStyle'),
       Output('schedule','groupsStyle')],
-      [Input('schedule','clickData'),
+      [Input('schedule','itemClickData'),
       Input('date-picker','date')]
 )
 def update_schedule(click_data,date_value):
@@ -188,23 +190,27 @@ def update_schedule(click_data,date_value):
                   [
                         dbc.Col(
                               [
-                                       html.Img(src=team1_logo,style={'max-width':'100%','max-height':'100%'})
+                                       html.Img(src=team1_logo,style={'background-color':team1_bg_color,'max-width':'100%','max-height':'100%','vertical-align':'baseline'})
 
-                              ],width=4,className='text-center',style={'height':'100%'}
+                              ],width=4,className='text-center',style={'height':'100%','width':'auto'}
                         ),
                         dbc.Col(
                               [
-                                    "@"
+                                   "VS"
+                                    # html.Div(team1_location,style={'background-color':team1_bg_color,'color':team1_text_color,'float':'left'}),
+                                    # html.Div("vs "+team2_location,style={'background-color':team2_bg_color,'color':team2_text_color,'float':'left'}),
+                                    # html.Div(venue,style={'background-color':venue_bg_color,'color':venue_text_color}),
+                                    # html.Div(odds_details,style={'background-color':odds_background,'color':odds_text_color})
 
-                              ],width=4,className='text-center',style={'color':'#000','height':'100%'}
+                              ],width=4,style={'color':'#000','height':'100%','width':'auto'}
                         ),
                         dbc.Col(
                               [
-                                      html.Img(src=team2_logo,style={'max-width':'100%','max-height':'100%'})
+                                      html.Img(src=team2_logo,style={'background-color':team2_bg_color,'max-width':'100%','max-height':'100%','vertical-align':'baseline'})
 
-                              ],width=4,className='text-center',style={'height':'100%'}
+                              ],width=4,className='text-center',style={'height':'100%','width':'auto'}
                         )
-                  ],className='g-0',style={'width':'100%','height':'100%'},justify='center'
+                  ],className='g-0',style={'width':'100%','height':'100%'},justify='between'
             ))
         groups.append({
           'id': group_id,

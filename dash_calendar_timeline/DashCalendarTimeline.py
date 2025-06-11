@@ -27,6 +27,12 @@ Keyword arguments:
 - id (string; optional):
     The ID used to identify this component in Dash callbacks.
 
+- boundsChangeData (dict; optional):
+    Called when the bounds in the calendar's canvas change. Use it for
+    example to load new data to display. (see \"Behind the scenes\"
+    below). canvasTimeStart and canvasTimeEnd are unix timestamps in
+    milliseconds.
+
 - buffer (number; optional):
     a number (default to 3) which represents the extra timeline
     rendered on right and lift of the visible area which the user will
@@ -47,8 +53,23 @@ Keyword arguments:
     \"right\". If you pass True, it will be treated as \"right\" to
     not break compatibility with versions 0.9 and below.
 
-- clickData (dict; optional):
-    Returns the Item ID and time for the item clicked.
+- canvasClickData (dict; optional):
+    Called when an empty spot on the canvas was clicked. Get the group
+    ID and the time as arguments. For example open a \"new item\"
+    window after this.
+
+- canvasContextMenuData (dict; optional):
+    Called when the canvas is clicked by the right button of the
+    mouse. Note: If this property is set the default context menu
+    doesn't appear.
+
+- canvasDoubleClickData (dict; optional):
+    Called when an empty spot on the canvas was double clicked. Get
+    the group ID and the time as arguments.
+
+- clickTolerance (number; optional):
+    How many pixels we can drag the background for it to be counted as
+    a click on the background. Default 3.
 
 - customGroups (boolean; default False):
     This will determine whether you'd want to set up custom content
@@ -92,6 +113,11 @@ Keyword arguments:
 - dragInfoLabelStyle (dict; optional):
     Style applied to the dragInfoLabel.
 
+- dragSnap (number; optional):
+    Snapping unit when dragging items. Defaults to 15 * 60 * 1000 or
+    15min. When so, the items will snap to 15min intervals when
+    dragging.
+
 - draggingItemColor (string; default "red"):
     Item color while the item is being dragged around.
 
@@ -107,9 +133,35 @@ Keyword arguments:
     This will be used to set up custom css style of content of groups
     in the sidebar.
 
+- itemClickData (dict; optional):
+    Called when an item is clicked. Note: the item must be selected
+    before it's clicked... except if it's a touch event and
+    itemTouchSendsClick is enabled. time is the time that corresponds
+    to where you click on the item in the timeline.
+
+- itemContextMenuData (dict; optional):
+    Called when the item is clicked by the right button of the mouse.
+    time is the time that corresponds to where you context click on
+    the item in the timeline. Note: If this property is set the
+    default context menu doesn't appear.
+
+- itemDoubleClickData (dict; optional):
+    Called when an item was double clicked. time is the time that
+    corresponds to where you double click on the item in the timeline.
+
 - itemHeightRatio (number; optional):
     What percentage of the height of the line is taken by the item?
     Default 0.65.
+
+- itemSelectData (dict; optional):
+    This is sent on the first click on an item. time is the time that
+    corresponds to where you click/select on the item in the timeline.
+
+- itemTouchSendsClick (boolean; optional):
+    Normally tapping (touching) an item selects it. If this is set to
+    True, a tap will have the same effect, as selecting with the first
+    click and then clicking again to open and send the onItemClick
+    event. Defaults to False.
 
 - items (list; default [{}]):
     The items are used to determine the number of items within a
@@ -181,7 +233,11 @@ Keyword arguments:
     The exact ending viewport of the calendar.
 
 - visibleTimeStart (number; optional):
-    The exact starting viewport of the calendar."""
+    The exact starting viewport of the calendar.
+
+- zoomData (dict; optional):
+    Called when the timeline is zoomed, either via mouse/pinch zoom or
+    clicking header to change timeline units."""
     _children_props = ['customItemsContent', 'customGroupsContent', 'sidebarHeaderContent']
     _base_nodes = ['customItemsContent', 'customGroupsContent', 'sidebarHeaderContent', 'children']
     _namespace = 'dash_calendar_timeline'
@@ -200,16 +256,19 @@ Keyword arguments:
         buffer: typing.Optional[NumberType] = None,
         sidebarWidth: typing.Optional[NumberType] = None,
         rightSidebarWidth: typing.Optional[NumberType] = None,
+        dragSnap: typing.Optional[NumberType] = None,
         minResizeWidth: typing.Optional[NumberType] = None,
         lineHeight: typing.Optional[NumberType] = None,
         itemHeightRatio: typing.Optional[NumberType] = None,
         minZoom: typing.Optional[NumberType] = None,
         maxZoom: typing.Optional[NumberType] = None,
+        clickTolerance: typing.Optional[NumberType] = None,
         canMove: typing.Optional[bool] = None,
         canChangeGroup: typing.Optional[bool] = None,
         canResize: typing.Optional[typing.Union[str, bool]] = None,
         useResizeHandle: typing.Optional[bool] = None,
         traditionalZoom: typing.Optional[bool] = None,
+        itemTouchSendsClick: typing.Optional[bool] = None,
         timeSteps: typing.Optional[dict] = None,
         customItems: typing.Optional[bool] = None,
         customGroups: typing.Optional[bool] = None,
@@ -231,12 +290,20 @@ Keyword arguments:
         dateHeaderUnit: typing.Optional[str] = None,
         dateHeaderLabelFormat: typing.Optional[str] = None,
         dateHeaderHeight: typing.Optional[NumberType] = None,
-        clickData: typing.Optional[dict] = None,
+        itemClickData: typing.Optional[dict] = None,
+        itemDoubleClickData: typing.Optional[dict] = None,
+        itemContextMenuData: typing.Optional[dict] = None,
+        itemSelectData: typing.Optional[dict] = None,
+        canvasClickData: typing.Optional[dict] = None,
+        canvasDoubleClickData: typing.Optional[dict] = None,
+        canvasContextMenuData: typing.Optional[dict] = None,
+        zoomData: typing.Optional[dict] = None,
+        boundsChangeData: typing.Optional[dict] = None,
         **kwargs
     ):
-        self._prop_names = ['id', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'clickData', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemHeightRatio', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart']
+        self._prop_names = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'clickData', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemHeightRatio', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart']
+        self.available_properties = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()
