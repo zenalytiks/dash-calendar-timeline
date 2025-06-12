@@ -68,11 +68,11 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
 
 \item{customItemsContent}{A list of or a singular dash component, string or number. This will be used to set up custom content of items in the main timeline.}
 
-\item{customMarkers}{Unnamed list. Marker that is placed on the specified date/time. Example usage.
+\item{customMarkers}{Unnamed list. Marker that is placed on the specified date/time. Example usage:
 [
-   {'date': today, 'style':{'backgorund-color':'red'}},
-   {'date': tomorrow, 'style':{'backgorund-color':'green'}},
-   {'date': nextFriday, 'style':{'backgorund-color':'blue'}},
+   {'date': 1750070400000, 'style':{'backgorund-color':'red'}},
+   {'date': 1750675200000, 'style':{'backgorund-color':'green'}},
+   {'date': 1751467500000, 'style':{'backgorund-color':'blue'}},
 ]}
 
 \item{dateHeaderHeight}{Numeric. Determines the height of the header in pixels. Default 30.}

@@ -92,6 +92,19 @@ module.exports = (env, argv) => {
                         },
                     ],
                 },
+                {
+                    test: /\.scss$/,
+                    use: [
+                        {
+                            loader: 'style-loader',
+                            options: {
+                                insertAt: 'top'
+                            }
+                        },
+                        'css-loader',
+                        'sass-loader'
+                    ]
+                }
             ],
         },
         optimization: {

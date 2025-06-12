@@ -7,7 +7,8 @@ import Timeline, { TimelineMarkers,
   TimelineHeaders,
   SidebarHeader,
   DateHeader } from 'react-calendar-timeline';
-import 'react-calendar-timeline/dist/style.css';
+import './style.css';
+import './Timeline.scss';
 import moment from "moment";
 
 /**

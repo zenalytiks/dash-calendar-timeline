@@ -91,10 +91,10 @@ Keyword arguments:
     timeline.
 
 - customMarkers (list; optional):
-    Marker that is placed on the specified date/time. Example usage.
-    [     {'date': today, 'style':{'backgorund-color':'red'}},
-    {'date': tomorrow, 'style':{'backgorund-color':'green'}},
-    {'date': nextFriday, 'style':{'backgorund-color':'blue'}},  ].
+    Marker that is placed on the specified date/time. Example usage:
+    [     {'date': 1750070400000, 'style':{'backgorund-color':'red'}},
+    {'date': 1750675200000, 'style':{'backgorund-color':'green'}},
+    {'date': 1751467500000, 'style':{'backgorund-color':'blue'}},  ].
 
 - dateHeaderHeight (number; optional):
     Determines the height of the header in pixels. Default 30.
@@ -211,7 +211,7 @@ Keyword arguments:
 - selectedItemColor (string; default "#1a6fb3"):
     Item color when item is selected.
 
-- showCursorMarker (boolean; optional):
+- showCursorMarker (boolean; default False):
     Marker that is displayed when hovering over the timeline and
     matches where your cursor is.
 

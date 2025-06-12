@@ -23,11 +23,11 @@ Keyword arguments:
 - `customGroupsContent` (a list of or a singular dash component, string or number; optional): This will be used to set up custom content of groups in the sidebar.
 - `customItems` (Bool; optional): This will determine whether you'd want to set up custom content for items or not.
 - `customItemsContent` (a list of or a singular dash component, string or number; optional): This will be used to set up custom content of items in the main timeline.
-- `customMarkers` (Array; optional): Marker that is placed on the specified date/time. Example usage.
+- `customMarkers` (Array; optional): Marker that is placed on the specified date/time. Example usage:
 [
-   {'date': today, 'style':{'backgorund-color':'red'}},
-   {'date': tomorrow, 'style':{'backgorund-color':'green'}},
-   {'date': nextFriday, 'style':{'backgorund-color':'blue'}},
+   {'date': 1750070400000, 'style':{'backgorund-color':'red'}},
+   {'date': 1750675200000, 'style':{'backgorund-color':'green'}},
+   {'date': 1751467500000, 'style':{'backgorund-color':'blue'}},
 ]
 - `dateHeaderHeight` (Real; optional): Determines the height of the header in pixels. Default 30.
 - `dateHeaderLabelFormat` (String; optional): Controls the how to format the interval label
