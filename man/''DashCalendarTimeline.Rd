@@ -28,8 +28,9 @@ itemTouchSendsClick=NULL, items=NULL, itemsClass=NULL,
 itemsStyle=NULL, lineHeight=NULL, maxZoom=NULL,
 minResizeWidth=NULL, minZoom=NULL, resizingItemBorder=NULL,
 rightSidebarWidth=NULL, selectedItemColor=NULL,
-sidebarHeaderContent=NULL, sidebarHeaderVariant=NULL,
-sidebarWidth=NULL, timeSteps=NULL, timelineHeaderStyle=NULL,
+showTodayMarker=NULL, sidebarHeaderContent=NULL,
+sidebarHeaderVariant=NULL, sidebarWidth=NULL,
+timeSteps=NULL, timelineHeaderStyle=NULL,
 traditionalZoom=NULL, useResizeHandle=NULL,
 visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
 }
@@ -120,6 +121,8 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
 \item{rightSidebarWidth}{Numeric. Width of the right sidebar in pixels. If set to 0, the right sidebar is not rendered. Defaults to 0.}
 
 \item{selectedItemColor}{Character. Item color when item is selected.}
+
+\item{showTodayMarker}{Logical. Marker that is placed on the current date/time.}
 
 \item{sidebarHeaderContent}{A list of or a singular dash component, string or number. Renders the Content above the sidebar.}
 

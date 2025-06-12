@@ -76,6 +76,7 @@ app.layout = dbc.Container(
                             dragInfoLabel=True,
                             traditionalZoom=False,
                             selectedItemColor='rgba(50, 245, 39, 0.5)',
+                            showTodayMarker=True
                         #     draggingItemColor="purple",
                         #     resizingItemBorder="2px solid black"
                         ),

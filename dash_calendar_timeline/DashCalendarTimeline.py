@@ -202,6 +202,9 @@ Keyword arguments:
 - selectedItemColor (string; default "#1a6fb3"):
     Item color when item is selected.
 
+- showTodayMarker (boolean; default False):
+    Marker that is placed on the current date/time.
+
 - sidebarHeaderContent (a list of or a singular dash component, string or number; optional):
     Renders the Content above the sidebar.
 
@@ -283,6 +286,7 @@ Keyword arguments:
         groupsClass: typing.Optional[str] = None,
         dragInfoLabel: typing.Optional[bool] = None,
         dragInfoLabelStyle: typing.Optional[dict] = None,
+        showTodayMarker: typing.Optional[bool] = None,
         sidebarHeaderVariant: typing.Optional[str] = None,
         sidebarHeaderContent: typing.Optional[ComponentType] = None,
         timelineHeaderStyle: typing.Optional[dict] = None,
@@ -301,9 +305,9 @@ Keyword arguments:
         boundsChangeData: typing.Optional[dict] = None,
         **kwargs
     ):
-        self._prop_names = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
+        self._prop_names = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'showTodayMarker', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
+        self.available_properties = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'showTodayMarker', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()

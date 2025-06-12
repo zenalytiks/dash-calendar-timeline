@@ -51,6 +51,7 @@ Keyword arguments:
 - `resizingItemBorder` (String; optional): Item border (CSS border e.g, 2px solid red) while the item is being resized.
 - `rightSidebarWidth` (Real; optional): Width of the right sidebar in pixels. If set to 0, the right sidebar is not rendered. Defaults to 0.
 - `selectedItemColor` (String; optional): Item color when item is selected.
+- `showTodayMarker` (Bool; optional): Marker that is placed on the current date/time.
 - `sidebarHeaderContent` (a list of or a singular dash component, string or number; optional): Renders the Content above the sidebar.
 - `sidebarHeaderVariant` (String; optional): Determines whether the content goes above the left or right sidebar.
 - `sidebarWidth` (Real; optional): Width of the sidebar in pixels. If set to 0, the sidebar is not rendered. Defaults to 150.
@@ -72,7 +73,7 @@ Default:
 - `zoomData` (Dict; optional): Called when the timeline is zoomed, either via mouse/pinch zoom or clicking header to change timeline units.
 """
 function ''_dashcalendartimeline(; kwargs...)
-        available_props = Symbol[:id, :boundsChangeData, :buffer, :canChangeGroup, :canMove, :canResize, :canvasClickData, :canvasContextMenuData, :canvasDoubleClickData, :clickTolerance, :customGroups, :customGroupsContent, :customItems, :customItemsContent, :dateHeaderHeight, :dateHeaderLabelFormat, :dateHeaderStyle, :dateHeaderUnit, :defaultTimeEnd, :defaultTimeStart, :dragInfoLabel, :dragInfoLabelStyle, :dragSnap, :draggingItemColor, :groups, :groupsClass, :groupsStyle, :itemClickData, :itemContextMenuData, :itemDoubleClickData, :itemHeightRatio, :itemSelectData, :itemTouchSendsClick, :items, :itemsClass, :itemsStyle, :lineHeight, :maxZoom, :minResizeWidth, :minZoom, :resizingItemBorder, :rightSidebarWidth, :selectedItemColor, :sidebarHeaderContent, :sidebarHeaderVariant, :sidebarWidth, :timeSteps, :timelineHeaderStyle, :traditionalZoom, :useResizeHandle, :visibleTimeEnd, :visibleTimeStart, :zoomData]
+        available_props = Symbol[:id, :boundsChangeData, :buffer, :canChangeGroup, :canMove, :canResize, :canvasClickData, :canvasContextMenuData, :canvasDoubleClickData, :clickTolerance, :customGroups, :customGroupsContent, :customItems, :customItemsContent, :dateHeaderHeight, :dateHeaderLabelFormat, :dateHeaderStyle, :dateHeaderUnit, :defaultTimeEnd, :defaultTimeStart, :dragInfoLabel, :dragInfoLabelStyle, :dragSnap, :draggingItemColor, :groups, :groupsClass, :groupsStyle, :itemClickData, :itemContextMenuData, :itemDoubleClickData, :itemHeightRatio, :itemSelectData, :itemTouchSendsClick, :items, :itemsClass, :itemsStyle, :lineHeight, :maxZoom, :minResizeWidth, :minZoom, :resizingItemBorder, :rightSidebarWidth, :selectedItemColor, :showTodayMarker, :sidebarHeaderContent, :sidebarHeaderVariant, :sidebarWidth, :timeSteps, :timelineHeaderStyle, :traditionalZoom, :useResizeHandle, :visibleTimeEnd, :visibleTimeStart, :zoomData]
         wild_props = Symbol[]
         return Component("''_dashcalendartimeline", "DashCalendarTimeline", "dash_calendar_timeline", available_props, wild_props; kwargs...)
 end
