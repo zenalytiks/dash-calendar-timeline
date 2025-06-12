@@ -14,8 +14,9 @@ DashCalendarTimeline renders React's Calendar Timeline inside the Dash App.
 canChangeGroup=NULL, canMove=NULL, canResize=NULL,
 canvasClickData=NULL, canvasContextMenuData=NULL,
 canvasDoubleClickData=NULL, clickTolerance=NULL,
-customGroups=NULL, customGroupsContent=NULL,
-customItems=NULL, customItemsContent=NULL,
+cursorMarkerStyle=NULL, customGroups=NULL,
+customGroupsContent=NULL, customItems=NULL,
+customItemsContent=NULL, customMarkers=NULL,
 dateHeaderHeight=NULL, dateHeaderLabelFormat=NULL,
 dateHeaderStyle=NULL, dateHeaderUnit=NULL,
 defaultTimeEnd=NULL, defaultTimeStart=NULL,
@@ -28,9 +29,10 @@ itemTouchSendsClick=NULL, items=NULL, itemsClass=NULL,
 itemsStyle=NULL, lineHeight=NULL, maxZoom=NULL,
 minResizeWidth=NULL, minZoom=NULL, resizingItemBorder=NULL,
 rightSidebarWidth=NULL, selectedItemColor=NULL,
-showTodayMarker=NULL, sidebarHeaderContent=NULL,
-sidebarHeaderVariant=NULL, sidebarWidth=NULL,
-timeSteps=NULL, timelineHeaderStyle=NULL,
+showCursorMarker=NULL, showTodayMarker=NULL,
+sidebarHeaderContent=NULL, sidebarHeaderVariant=NULL,
+sidebarWidth=NULL, timeSteps=NULL, timelineHeaderStyle=NULL,
+todayMarkerInterval=NULL, todayMarkerStyle=NULL,
 traditionalZoom=NULL, useResizeHandle=NULL,
 visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
 }
@@ -56,6 +58,8 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
 
 \item{clickTolerance}{Numeric. How many pixels we can drag the background for it to be counted as a click on the background. Default 3.}
 
+\item{cursorMarkerStyle}{Named list. Use this to render special styles for the cursorMarker.}
+
 \item{customGroups}{Logical. This will determine whether you'd want to set up custom content for groups or not.}
 
 \item{customGroupsContent}{A list of or a singular dash component, string or number. This will be used to set up custom content of groups in the sidebar.}
@@ -63,6 +67,13 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
 \item{customItems}{Logical. This will determine whether you'd want to set up custom content for items or not.}
 
 \item{customItemsContent}{A list of or a singular dash component, string or number. This will be used to set up custom content of items in the main timeline.}
+
+\item{customMarkers}{Unnamed list. Marker that is placed on the specified date/time. Example usage.
+[
+   {'date': today, 'style':{'backgorund-color':'red'}},
+   {'date': tomorrow, 'style':{'backgorund-color':'green'}},
+   {'date': nextFriday, 'style':{'backgorund-color':'blue'}},
+]}
 
 \item{dateHeaderHeight}{Numeric. Determines the height of the header in pixels. Default 30.}
 
@@ -122,6 +133,8 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
 
 \item{selectedItemColor}{Character. Item color when item is selected.}
 
+\item{showCursorMarker}{Logical. Marker that is displayed when hovering over the timeline and matches where your cursor is.}
+
 \item{showTodayMarker}{Logical. Marker that is placed on the current date/time.}
 
 \item{sidebarHeaderContent}{A list of or a singular dash component, string or number. Renders the Content above the sidebar.}
@@ -142,6 +155,10 @@ Default:
        }}
 
 \item{timelineHeaderStyle}{Named list. Style applied to the root component of headers.}
+
+\item{todayMarkerInterval}{Numeric. How often the TodayMarker refreshes. Value represents milliseconds. Default is 10000.}
+
+\item{todayMarkerStyle}{Named list. Use this to render special styles for the todayMarker.}
 
 \item{traditionalZoom}{Logical. Zoom in when scrolling the mouse up/down. Defaults to false.}
 

@@ -18,10 +18,17 @@ Keyword arguments:
 - `canvasContextMenuData` (Dict; optional): Called when the canvas is clicked by the right button of the mouse. Note: If this property is set the default context menu doesn't appear.
 - `canvasDoubleClickData` (Dict; optional): Called when an empty spot on the canvas was double clicked. Get the group ID and the time as arguments.
 - `clickTolerance` (Real; optional): How many pixels we can drag the background for it to be counted as a click on the background. Default 3.
+- `cursorMarkerStyle` (Dict; optional): Use this to render special styles for the cursorMarker.
 - `customGroups` (Bool; optional): This will determine whether you'd want to set up custom content for groups or not.
 - `customGroupsContent` (a list of or a singular dash component, string or number; optional): This will be used to set up custom content of groups in the sidebar.
 - `customItems` (Bool; optional): This will determine whether you'd want to set up custom content for items or not.
 - `customItemsContent` (a list of or a singular dash component, string or number; optional): This will be used to set up custom content of items in the main timeline.
+- `customMarkers` (Array; optional): Marker that is placed on the specified date/time. Example usage.
+[
+   {'date': today, 'style':{'backgorund-color':'red'}},
+   {'date': tomorrow, 'style':{'backgorund-color':'green'}},
+   {'date': nextFriday, 'style':{'backgorund-color':'blue'}},
+]
 - `dateHeaderHeight` (Real; optional): Determines the height of the header in pixels. Default 30.
 - `dateHeaderLabelFormat` (String; optional): Controls the how to format the interval label
 - `dateHeaderStyle` (Dict; optional): Style applied to the root of the header.
@@ -51,6 +58,7 @@ Keyword arguments:
 - `resizingItemBorder` (String; optional): Item border (CSS border e.g, 2px solid red) while the item is being resized.
 - `rightSidebarWidth` (Real; optional): Width of the right sidebar in pixels. If set to 0, the right sidebar is not rendered. Defaults to 0.
 - `selectedItemColor` (String; optional): Item color when item is selected.
+- `showCursorMarker` (Bool; optional): Marker that is displayed when hovering over the timeline and matches where your cursor is.
 - `showTodayMarker` (Bool; optional): Marker that is placed on the current date/time.
 - `sidebarHeaderContent` (a list of or a singular dash component, string or number; optional): Renders the Content above the sidebar.
 - `sidebarHeaderVariant` (String; optional): Determines whether the content goes above the left or right sidebar.
@@ -66,6 +74,8 @@ Default:
          year: 1
        }
 - `timelineHeaderStyle` (Dict; optional): Style applied to the root component of headers.
+- `todayMarkerInterval` (Real; optional): How often the TodayMarker refreshes. Value represents milliseconds. Default is 10000.
+- `todayMarkerStyle` (Dict; optional): Use this to render special styles for the todayMarker.
 - `traditionalZoom` (Bool; optional): Zoom in when scrolling the mouse up/down. Defaults to false.
 - `useResizeHandle` (Bool; optional): Append a special .rct-drag-right handle to the elements and only resize if dragged from there. Defaults to false.
 - `visibleTimeEnd` (Real; optional): The exact ending viewport of the calendar.
@@ -73,7 +83,7 @@ Default:
 - `zoomData` (Dict; optional): Called when the timeline is zoomed, either via mouse/pinch zoom or clicking header to change timeline units.
 """
 function ''_dashcalendartimeline(; kwargs...)
-        available_props = Symbol[:id, :boundsChangeData, :buffer, :canChangeGroup, :canMove, :canResize, :canvasClickData, :canvasContextMenuData, :canvasDoubleClickData, :clickTolerance, :customGroups, :customGroupsContent, :customItems, :customItemsContent, :dateHeaderHeight, :dateHeaderLabelFormat, :dateHeaderStyle, :dateHeaderUnit, :defaultTimeEnd, :defaultTimeStart, :dragInfoLabel, :dragInfoLabelStyle, :dragSnap, :draggingItemColor, :groups, :groupsClass, :groupsStyle, :itemClickData, :itemContextMenuData, :itemDoubleClickData, :itemHeightRatio, :itemSelectData, :itemTouchSendsClick, :items, :itemsClass, :itemsStyle, :lineHeight, :maxZoom, :minResizeWidth, :minZoom, :resizingItemBorder, :rightSidebarWidth, :selectedItemColor, :showTodayMarker, :sidebarHeaderContent, :sidebarHeaderVariant, :sidebarWidth, :timeSteps, :timelineHeaderStyle, :traditionalZoom, :useResizeHandle, :visibleTimeEnd, :visibleTimeStart, :zoomData]
+        available_props = Symbol[:id, :boundsChangeData, :buffer, :canChangeGroup, :canMove, :canResize, :canvasClickData, :canvasContextMenuData, :canvasDoubleClickData, :clickTolerance, :cursorMarkerStyle, :customGroups, :customGroupsContent, :customItems, :customItemsContent, :customMarkers, :dateHeaderHeight, :dateHeaderLabelFormat, :dateHeaderStyle, :dateHeaderUnit, :defaultTimeEnd, :defaultTimeStart, :dragInfoLabel, :dragInfoLabelStyle, :dragSnap, :draggingItemColor, :groups, :groupsClass, :groupsStyle, :itemClickData, :itemContextMenuData, :itemDoubleClickData, :itemHeightRatio, :itemSelectData, :itemTouchSendsClick, :items, :itemsClass, :itemsStyle, :lineHeight, :maxZoom, :minResizeWidth, :minZoom, :resizingItemBorder, :rightSidebarWidth, :selectedItemColor, :showCursorMarker, :showTodayMarker, :sidebarHeaderContent, :sidebarHeaderVariant, :sidebarWidth, :timeSteps, :timelineHeaderStyle, :todayMarkerInterval, :todayMarkerStyle, :traditionalZoom, :useResizeHandle, :visibleTimeEnd, :visibleTimeStart, :zoomData]
         wild_props = Symbol[]
         return Component("''_dashcalendartimeline", "DashCalendarTimeline", "dash_calendar_timeline", available_props, wild_props; kwargs...)
 end

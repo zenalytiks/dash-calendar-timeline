@@ -61,6 +61,11 @@ export default function DashCalendarTimeline(props) {
     dateHeaderLabelFormat,
     dateHeaderHeight,
     showTodayMarker,
+    todayMarkerInterval,
+    todayMarkerStyle,
+    customMarkers,
+    showCursorMarker,
+    cursorMarkerStyle,
     // eslint-disable-next-line no-unused-vars
     itemClickData,
     itemDoubleClickData,
@@ -435,7 +440,31 @@ export default function DashCalendarTimeline(props) {
 
             >
             <TimelineMarkers>
-              {showTodayMarker && (<TodayMarker />)}
+              {showTodayMarker && (
+                <TodayMarker
+                  interval={todayMarkerInterval}>
+                    {({ styles, date }) =>
+                      <div style={{ ...styles, ...todayMarkerStyle }} />
+                    }
+                </TodayMarker>
+                )
+              }
+              {Array.isArray(customMarkers) &&
+              customMarkers.map(marker => (
+                <CustomMarker key={marker.date} date={marker.date}>
+                  {({ styles, date }) => (
+                    <div style={{ ...styles, ...marker.style }} />
+                  )}
+                </CustomMarker>
+              ))}
+              {showCursorMarker && (
+                <CursorMarker>
+                    {({ styles, date }) =>
+                      <div style={{ ...styles, ...cursorMarkerStyle }} />
+                    }
+                </CursorMarker>
+                )
+              }
             </TimelineMarkers>
             <TimelineHeaders
               style={timelineHeaderStyle}>
@@ -478,7 +507,9 @@ DashCalendarTimeline.defaultProps = {
   selectedItemColor: "#1a6fb3",
   resizingItemBorder: "2px solid red",
   dragInfoLabel: false,
-  showTodayMarker: false
+  showTodayMarker: false,
+  todayMarkerInterval: 10000,
+  showCursorMarker: false
 };
 
 DashCalendarTimeline.propTypes = {
@@ -683,6 +714,36 @@ DashCalendarTimeline.propTypes = {
      * Marker that is placed on the current date/time.
      */
     showTodayMarker: PropTypes.bool,
+
+    /**
+     * How often the TodayMarker refreshes. Value represents milliseconds. Default is 10000.
+     */
+    todayMarkerInterval: PropTypes.number,
+
+    /**
+     * Use this to render special styles for the todayMarker.
+     */
+    todayMarkerStyle: PropTypes.object,
+
+    /**
+     * Marker that is placed on the specified date/time. Example usage:
+     * [
+     *    {'date': 1750070400000, 'style':{'backgorund-color':'red'}},
+     *    {'date': 1750675200000, 'style':{'backgorund-color':'green'}},
+     *    {'date': 1751467500000, 'style':{'backgorund-color':'blue'}},
+     * ]
+     */
+    customMarkers: PropTypes.array,
+
+    /**
+     * Marker that is displayed when hovering over the timeline and matches where your cursor is.
+     */
+    showCursorMarker: PropTypes.bool,
+
+    /**
+     * Use this to render special styles for the cursorMarker.
+     */
+    cursorMarkerStyle: PropTypes.object,
 
     /**
      * Determines whether the content goes above the left or right sidebar.

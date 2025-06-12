@@ -76,7 +76,15 @@ app.layout = dbc.Container(
                             dragInfoLabel=True,
                             traditionalZoom=False,
                             selectedItemColor='rgba(50, 245, 39, 0.5)',
-                            showTodayMarker=True
+                            showTodayMarker=True,
+                            todayMarkerInterval=2000,
+                            todayMarkerStyle={'background-color':'green'},
+                            customMarkers=[
+                                 {'date': 1750070400000, 'style': {'background-color': 'red'}},
+                                 {'date': 1750675200000, 'style': {'background-color': 'blue'}}
+                            ],
+                            showCursorMarker=True,
+                            cursorMarkerStyle={'background-color': 'red'}
                         #     draggingItemColor="purple",
                         #     resizingItemBorder="2px solid black"
                         ),
