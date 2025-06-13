@@ -188,7 +188,7 @@ export default function DashCalendarTimeline(props) {
     })
   };
 
-  const handleCanvasClick = (groupId, e, time) => {
+  const handleCanvasClick = (groupId, time, e) => {
     const updatedCanvasClickData = {
       groupId,
       time,
@@ -201,7 +201,7 @@ export default function DashCalendarTimeline(props) {
     })
   };
 
-  const handleCanvasDoubleClick = (groupId, e, time) => {
+  const handleCanvasDoubleClick = (groupId, time, e) => {
     const updatedCanvasDoubleClickData = {
       groupId,
       time,
@@ -214,7 +214,7 @@ export default function DashCalendarTimeline(props) {
     })
   };
 
-  const handleCanvasContextMenu = (groupId, e, time) => {
+  const handleCanvasContextMenu = (groupId, time, e) => {
     const updatedCanvasContextMenuData = {
       groupId,
       time,
@@ -339,8 +339,6 @@ export default function DashCalendarTimeline(props) {
     
     setProps({items: updatedItems});
     setDraggedItem(undefined);
-
-    console.log('Moved', itemId, dragTime, newGroupOrder);
   };
 
   const handleItemResize = (itemId, time, edge) => {
@@ -360,8 +358,6 @@ export default function DashCalendarTimeline(props) {
     
     setProps({items: updatedItems});
     setDraggedItem(undefined);
-
-    console.log('Resized', itemId, time, edge);
   };
 
   const InfoLabel = ({ item, group, time }) => {
