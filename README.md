@@ -4,95 +4,250 @@ Dash Calendar Timeline is a Dash component library.
 
 A custom component for rendering react-calendar-timeline in Dash Apps.
 
-Get started with:
-1. Install Dash and its dependencies: https://dash.plotly.com/installation
-2. Run `python usage.py`
-3. Visit http://localhost:8050 in your web browser
+## Keyword arguments:
 
-## Contributing
+#### id (string; optional):
+    The ID used to identify this component in Dash callbacks.
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md)
+#### boundsChangeData (dict; optional):
+    Called when the bounds in the calendar's canvas change. Use it for
+    example to load new data to display. (see \"Behind the scenes\"
+    below). canvasTimeStart and canvasTimeEnd are unix timestamps in
+    milliseconds.
 
-### Install dependencies
+#### buffer (number; optional):
+    a number (default to 3) which represents the extra timeline
+    rendered on right and lift of the visible area which the user will
+    scroll through before the time rerenders. Note: setting buffer to
+    1 will disable the scrolling on the timeline.
 
-If you have selected install_dependencies during the prompt, you can skip this part.
+#### canChangeGroup (boolean; optional):
+    Can items be moved between groups? Can be overridden in the items
+    array. Defaults to True.
 
-1. Install npm packages
-    ```
-    $ npm install
-    ```
-2. Create a virtual env and activate.
-    ```
-    $ virtualenv venv
-    $ . venv/bin/activate
-    ```
-    _Note: venv\Scripts\activate for windows_
+#### canMove (boolean; optional):
+    Can items be dragged around? Can be overridden in the items array.
+    Defaults to True.
 
-3. Install python packages required to build components.
-    ```
-    $ pip install -r requirements.txt
-    ```
-4. Install the python packages for testing (optional)
-    ```
-    $ pip install -r tests/requirements.txt
-    ```
+#### canResize (string | boolean; optional):
+    Can items be resized? Can be overridden in the items array.
+    Accepted values: False, \"left\", \"right\", \"both\". Defaults to
+    \"right\". If you pass True, it will be treated as \"right\" to
+    not break compatibility with versions 0.9 and below.
 
-### Write your component code in `src/lib/components/DashCalendarTimeline.react.js`.
+#### canvasClickData (dict; optional):
+    Called when an empty spot on the canvas was clicked. Get the group
+    ID and the time as arguments. For example open a \"new item\"
+    window after this.
 
-- The demo app is in `src/demo` and you will import your example component code into your demo app.
-- Test your code in a Python environment:
-    1. Build your code
-        ```
-        $ npm run build
-        ```
-    2. Run and modify the `usage.py` sample dash app:
-        ```
-        $ python usage.py
-        ```
-- Write tests for your component.
-    - A sample test is available in `tests/test_usage.py`, it will load `usage.py` and you can then automate interactions with selenium.
-    - Run the tests with `$ pytest tests`.
-    - The Dash team uses these types of integration tests extensively. Browse the Dash component code on GitHub for more examples of testing (e.g. https://github.com/plotly/dash-core-components)
-- Add custom styles to your component by putting your custom CSS files into your distribution folder (`dash_calendar_timeline`).
-    - Make sure that they are referenced in `MANIFEST.in` so that they get properly included when you're ready to publish your component.
-    - Make sure the stylesheets are added to the `_css_dist` dict in `dash_calendar_timeline/__init__.py` so dash will serve them automatically when the component suite is requested.
-- [Review your code](./review_checklist.md)
+#### canvasContextMenuData (dict; optional):
+    Called when the canvas is clicked by the right button of the
+    mouse. Note: If this property is set the default context menu
+    doesn't appear.
 
-### Create a production build and publish:
+#### canvasDoubleClickData (dict; optional):
+    Called when an empty spot on the canvas was double clicked. Get
+    the group ID and the time as arguments.
 
-1. Build your code:
-    ```
-    $ npm run build
-    ```
-2. Create a Python distribution
-    ```
-    $ python setup.py sdist bdist_wheel
-    ```
-    This will create source and wheel distribution in the generated the `dist/` folder.
-    See [PyPA](https://packaging.python.org/guides/distributing-packages-using-setuptools/#packaging-your-project)
-    for more information.
+#### clickTolerance (number; optional):
+    How many pixels we can drag the background for it to be counted as
+    a click on the background. Default 3.
 
-3. Test your tarball by copying it into a new environment and installing it locally:
-    ```
-    $ pip install dash_calendar_timeline-0.0.1.tar.gz
-    ```
+#### cursorMarkerStyle (dict; optional):
+    Use this to render special styles for the cursorMarker.
 
-4. If it works, then you can publish the component to NPM and PyPI:
-    1. Publish on PyPI
-        ```
-        $ twine upload dist/*
-        ```
-    2. Cleanup the dist folder (optional)
-        ```
-        $ rm -rf dist
-        ```
-    3. Publish on NPM (Optional if chosen False in `publish_on_npm`)
-        ```
-        $ npm publish
-        ```
-        _Publishing your component to NPM will make the JavaScript bundles available on the unpkg CDN. By default, Dash serves the component library's CSS and JS locally, but if you choose to publish the package to NPM you can set `serve_locally` to `False` and you may see faster load times._
+#### customGroups (boolean; default False):
+    This will determine whether you'd want to set up custom content
+    for groups or not.
 
-5. Share your component with the community! https://community.plotly.com/c/dash
-    1. Publish this repository to GitHub
-    2. Tag your GitHub repository with the plotly-dash tag so that it appears here: https://github.com/topics/plotly-dash
-    3. Create a post in the Dash community forum: https://community.plotly.com/c/dash
+#### customGroupsContent (a list of or a singular dash component, string or number; optional):
+    This will be used to set up custom content of groups in the
+    sidebar.
+
+#### customItems (boolean; default False):
+    This will determine whether you'd want to set up custom content
+    for items or not.
+
+#### customItemsContent (a list of or a singular dash component, string or number; optional):
+    This will be used to set up custom content of items in the main
+    timeline.
+
+#### customMarkers (list; optional):
+    Marker that is placed on the specified date/time. Example usage:
+    [
+        {'date': 1750070400000, 'style':{'backgorund-color':'red'}},
+        {'date': 1750675200000, 'style':{'backgorund-color':'green'}},
+        {'date': 1751467500000, 'style':{'backgorund-color':'blue'}}
+    ]
+
+#### dateHeaderHeight (number; optional):
+    Determines the height of the header in pixels. Default 30.
+
+#### dateHeaderLabelFormat (string; optional):
+    Controls the how to format the interval label.
+
+#### dateHeaderStyle (dict; optional):
+    Style applied to the root of the header.
+
+#### dateHeaderUnit (string; optional):
+    Determines the intervals between columns. Values can be second,
+    minute, hour, day, week, month, year or primaryHeader.
+
+#### defaultTimeEnd (number; optional):
+    This sets the end time for the timeline.
+
+#### defaultTimeStart (number; optional):
+    This sets the start time for the timeline.
+
+#### dragInfoLabel (boolean; default False):
+    This will render a info label over the timeline while the item is
+    being dragged around.
+
+#### dragInfoLabelStyle (dict; optional):
+    Style applied to the dragInfoLabel.
+
+#### dragSnap (number; optional):
+    Snapping unit when dragging items. Defaults to 15 * 60 * 1000 or
+    15min. When so, the items will snap to 15min intervals when
+    dragging.
+
+#### draggingItemColor (string; default "red"):
+    Item color while the item is being dragged around.
+
+#### groups (list; default [{}]):
+    The groups are used to determine the number of groups in a
+    Timeline.
+
+#### groupsClass (string; optional):
+    This will be used to set up custom css classes of content of
+    groups in the sidebar.
+
+#### groupsStyle (dict; optional):
+    This will be used to set up custom css style of content of groups
+    in the sidebar.
+
+#### itemClickData (dict; optional):
+    Called when an item is clicked. Note: the item must be selected
+    before it's clicked... except if it's a touch event and
+    itemTouchSendsClick is enabled. time is the time that corresponds
+    to where you click on the item in the timeline.
+
+#### itemContextMenuData (dict; optional):
+    Called when the item is clicked by the right button of the mouse.
+    time is the time that corresponds to where you context click on
+    the item in the timeline. Note: If this property is set the
+    default context menu doesn't appear.
+
+#### itemDoubleClickData (dict; optional):
+    Called when an item was double clicked. time is the time that
+    corresponds to where you double click on the item in the timeline.
+
+#### itemHeightRatio (number; optional):
+    What percentage of the height of the line is taken by the item?
+    Default 0.65.
+
+#### itemSelectData (dict; optional):
+    This is sent on the first click on an item. time is the time that
+    corresponds to where you click/select on the item in the timeline.
+
+#### itemTouchSendsClick (boolean; optional):
+    Normally tapping (touching) an item selects it. If this is set to
+    True, a tap will have the same effect, as selecting with the first
+    click and then clicking again to open and send the onItemClick
+    event. Defaults to False.
+
+#### items (list; default [{}]):
+    The items are used to determine the number of items within a
+    single group.
+
+#### itemsClass (string; optional):
+    This will be used to set up custom css classes for content of
+    custom items in the main timeline.
+
+#### itemsStyle (dict; optional):
+    This will be used to set up custom css styles for content of
+    custom items in the main timeline.
+
+#### lineHeight (number; optional):
+    Height of one line in the calendar in pixels. Default 30.
+
+#### maxZoom (number; optional):
+    Largest time the calendar can zoom to in milliseconds. Default 5 *
+    365.24 * 86400 * 1000 (5 years).
+
+#### minResizeWidth (number; optional):
+    The minimum width, in pixels, of a timeline entry when it's
+    possible to resize. If not reached, you must zoom in to resize
+    more. Default to 20.
+
+#### minZoom (number; optional):
+    Smallest time the calendar can zoom to in milliseconds. Default 60
+    * 60 * 1000 (1 hour).
+
+#### resizingItemBorder (string; default "2px solid red"):
+    Item border (CSS border e.g, 2px solid red) while the item is
+    being resized.
+
+#### rightSidebarWidth (number; optional):
+    Width of the right sidebar in pixels. If set to 0, the right
+    sidebar is not rendered. Defaults to 0.
+
+#### selectedItemColor (string; default "#1a6fb3"):
+    Item color when item is selected.
+
+#### showCursorMarker (boolean; default False):
+    Marker that is displayed when hovering over the timeline and
+    matches where your cursor is.
+
+#### showTodayMarker (boolean; default False):
+    Marker that is placed on the current date/time.
+
+#### sidebarHeaderContent (a list of or a singular dash component, string or number; optional):
+    Renders the Content above the sidebar.
+
+#### sidebarHeaderVariant (string; optional):
+    Determines whether the content goes above the left or right
+    sidebar.
+
+#### sidebarWidth (number; optional):
+    Width of the sidebar in pixels. If set to 0, the sidebar is not
+    rendered. Defaults to 150.
+
+#### timeSteps (dict; optional):
+    With what step to display different units. E.g. 15 for minute
+    means only minutes 0, 15, 30 and 45 will be shown.  Default:
+    {
+      second: 1,
+      minute: 1,
+      hour: 1,
+      day: 1,
+      month: 1,
+      year: 1
+    }
+
+#### timelineHeaderStyle (dict; optional):
+    Style applied to the root component of headers.
+
+#### todayMarkerInterval (number; default 10000):
+    How often the TodayMarker refreshes. Value represents
+    milliseconds. Default is 10000.
+
+#### todayMarkerStyle (dict; optional):
+    Use this to render special styles for the todayMarker.
+
+#### traditionalZoom (boolean; optional):
+    Zoom in when scrolling the mouse up/down. Defaults to False.
+
+#### useResizeHandle (boolean; optional):
+    Append a special .rct-drag-right handle to the elements and only
+    resize if dragged from there. Defaults to False.
+
+#### visibleTimeEnd (number; optional):
+    The exact ending viewport of the calendar.
+
+#### visibleTimeStart (number; optional):
+    The exact starting viewport of the calendar.
+
+#### zoomData (dict; optional):
+    Called when the timeline is zoomed, either via mouse/pinch zoom or
+    clicking header to change timeline units."""

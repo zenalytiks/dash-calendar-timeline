@@ -6,6 +6,8 @@ import dash_bootstrap_components as dbc
 from datetime import datetime, time
 import os
 from dash_calendar_timeline import DashCalendarTimeline
+from usage_banner import generate_custom_scoreboard
+import base64
 
 
 app = dash.Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP],
@@ -57,7 +59,7 @@ app.layout = dbc.Container(
                             defaultTimeStart=(df['start_time'].astype('int64') / 10**6).min(),
                             defaultTimeEnd=(df['start_time'].astype('int64') / 10**6).min() + 24 * 60 * 60 * 1000,
                             sidebarWidth=100,
-                            lineHeight=50,
+                            lineHeight=60,
                             itemHeightRatio=1,
                         #     dragSnap=15 * 60 * 1000,
                             maxZoom=24 * 60 * 60 * 1000,
@@ -188,39 +190,69 @@ def update_schedule(click_data,date_value):
               'end_time': game['end_time'][0],
               'itemProps':{
                   'style':{
-                        'background':'rgba(50, 245, 39, 0.2)',
-                        'borderRadius':'5px',
-                        'border': '2px solid rgb(50,245,39)',
+                        'background':'transparent',
+                        # 'borderRadius':'5px',
+                        'border': '2px solid #000',
                   }
               }
             })
 
-            customItemsContent.append(dbc.Row(
-                  [
-                        dbc.Col(
-                              [
-                                       html.Img(src=team1_logo,style={'background-color':team1_bg_color,'max-width':'100%','max-height':'100%','vertical-align':'baseline'})
+            scoreboard = generate_custom_scoreboard(
+                team1_name=team1_location,
+                team1_logo_url=team1_logo,
+                team1_text_color=team1_text_color,
+                team2_name=team2_location, 
+                team2_logo_url=team2_logo,
+                team2_text_color=team2_text_color,
+                venue=venue,
+                venue_text_color=venue_text_color,
+                score_line=odds_details,
+                score_text_color=odds_text_color,
+                team1_name_bg_color=team1_bg_color,
+                team1_logo_bg_color=team1_bg_color,
+                team2_name_bg_color=team2_bg_color,
+                team2_logo_bg_color=team2_bg_color,
+                venue_bg_color=venue_bg_color,
+                score_bg_color=odds_background
+                
+            )
 
-                              ],width=4,className='text-center',style={'height':'100%','width':'auto'}
-                        ),
-                        dbc.Col(
-                              [
-                                   "VS"
-                                    # html.Div(team1_location,style={'background-color':team1_bg_color,'color':team1_text_color,'float':'left'}),
-                                    # html.Div("vs "+team2_location,style={'background-color':team2_bg_color,'color':team2_text_color,'float':'left'}),
-                                    # html.Div(venue,style={'background-color':venue_bg_color,'color':venue_text_color}),
-                                    # html.Div(odds_details,style={'background-color':odds_background,'color':odds_text_color})
+            svg_string = scoreboard.as_svg()
+            svg_base64 = base64.b64encode(svg_string.encode()).decode()
+            
+            banner_content = html.Img(
+                src="data:image/svg+xml;base64,{}".format(svg_base64),
+                style={'max-width': '100%', 'max-height': '100%','vertical-align':'baseline'}
+            )
 
-                              ],width=4,style={'color':'#000','height':'100%','width':'auto'}
-                        ),
-                        dbc.Col(
-                              [
-                                      html.Img(src=team2_logo,style={'background-color':team2_bg_color,'max-width':'100%','max-height':'100%','vertical-align':'baseline'})
+            customItemsContent.append(banner_content)
 
-                              ],width=4,className='text-center',style={'height':'100%','width':'auto'}
-                        )
-                  ],className='g-0',style={'width':'100%','height':'100%'},justify='between'
-            ))
+            # customItemsContent.append(dbc.Row(
+            #       [
+            #             dbc.Col(
+            #                   [
+            #                            html.Img(src=team1_logo,style={'background-color':team1_bg_color,'max-width':'100%','max-height':'100%','vertical-align':'baseline'})
+
+            #                   ],width=4,className='text-center',style={'height':'100%','width':'auto'}
+            #             ),
+            #             dbc.Col(
+            #                   [
+            #                        "VS"
+            #                         # html.Div(team1_location,style={'background-color':team1_bg_color,'color':team1_text_color,'float':'left'}),
+            #                         # html.Div("vs "+team2_location,style={'background-color':team2_bg_color,'color':team2_text_color,'float':'left'}),
+            #                         # html.Div(venue,style={'background-color':venue_bg_color,'color':venue_text_color}),
+            #                         # html.Div(odds_details,style={'background-color':odds_background,'color':odds_text_color})
+
+            #                   ],width=4,style={'color':'#000','height':'100%','width':'auto'}
+            #             ),
+            #             dbc.Col(
+            #                   [
+            #                           html.Img(src=team2_logo,style={'background-color':team2_bg_color,'max-width':'100%','max-height':'100%','vertical-align':'baseline'})
+
+            #                   ],width=4,className='text-center',style={'height':'100%','width':'auto'}
+            #             )
+            #       ],className='g-0',style={'width':'100%','height':'100%'},justify='between'
+            # ))
         groups.append({
           'id': group_id,
           'title': station,
