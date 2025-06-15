@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import Timeline, { TimelineMarkers,
   CustomMarker,
@@ -41,6 +41,7 @@ export default function DashCalendarTimeline(props) {
     traditionalZoom,
     itemTouchSendsClick,
     timeSteps,
+    disableHorizontalScroll,
     customItems,
     customGroups,
     customItemsContent,
@@ -72,6 +73,7 @@ export default function DashCalendarTimeline(props) {
     itemDoubleClickData,
     itemContextMenuData,
     itemSelectData,
+    itemDimensions,
     canvasClickData,
     canvasDoubleClickData,
     canvasContextMenuData,
@@ -82,6 +84,8 @@ export default function DashCalendarTimeline(props) {
   const [draggedItem, setDraggedItem] = useState(undefined);
   
   const [currentItems, setCurrentItems] = useState(items);
+
+  const [currentItemDimensions, setCurrentItemDimensions] = useState(undefined);
   
   const [hasLocalModifications, setHasLocalModifications] = useState(false);
   
@@ -92,6 +96,20 @@ export default function DashCalendarTimeline(props) {
 
   const [lastVisibleTimeStart, setLastVisibleTimeStart] = useState(visibleTimeStart);
   const [lastVisibleTimeEnd, setLastVisibleTimeEnd] = useState(visibleTimeEnd);
+
+    // Use useRef to track the last dimensions to prevent unnecessary updates
+  const lastDimensionsRef = useRef(null);
+
+  // Helper function to compare dimensions objects
+  const dimensionsAreEqual = (dim1, dim2) => {
+    if (!dim1 && !dim2) return true;
+    if (!dim1 || !dim2) return false;
+    
+    return (
+      dim1.width === dim2.width &&
+      dim1.height === dim2.height
+    );
+  };
 
   const itemsHaveChanged = (newItems, oldItems) => {
     if (newItems.length !== oldItems.length) return true;
@@ -135,6 +153,12 @@ export default function DashCalendarTimeline(props) {
     setLastVisibleTimeStart(visibleTimeStart);
     setLastVisibleTimeEnd(visibleTimeEnd);
   }, [visibleTimeStart, visibleTimeEnd, lastVisibleTimeStart, lastVisibleTimeEnd, localVisibleTimeStart, localVisibleTimeEnd]);
+
+  useEffect (() => {
+    setProps({
+      itemDimensions: currentItemDimensions
+    })
+  }, [currentItemDimensions, setProps])
 
   const handleItemClick = (itemId, e, time) => {
     const updatedClickData = {
@@ -259,16 +283,33 @@ export default function DashCalendarTimeline(props) {
   };
 
   const handleTimeChange = (newVisibleTimeStart, newVisibleTimeEnd, updateScrollCanvas) => {
+
+    if (disableHorizontalScroll) {
+      return;
+    }
     setLocalVisibleTimeStart(newVisibleTimeStart);
     setLocalVisibleTimeEnd(newVisibleTimeEnd);
     
-    updateScrollCanvas(newVisibleTimeStart, newVisibleTimeEnd);
     
+    updateScrollCanvas(newVisibleTimeStart, newVisibleTimeEnd);
+
   };
 
   const itemRenderer = ({ item, itemContext, getItemProps, getResizeProps }) => {
     const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
-    console.log(customItemsContent);
+
+    // Only update dimensions if they have actually changed
+    const currentDimensions = itemContext.dimensions ? {
+      width: itemContext.dimensions.width,
+      height: itemContext.dimensions.height
+    } : null;
+    if (currentDimensions && !dimensionsAreEqual(currentDimensions, lastDimensionsRef.current)) {
+      lastDimensionsRef.current = currentDimensions;
+      // Use setTimeout to avoid updating state during render
+      setTimeout(() => {
+        setCurrentItemDimensions(currentDimensions);
+      }, 0);
+    }
     
     const backgroundColor = itemContext.selected 
                               ? (itemContext.dragging 
@@ -500,6 +541,7 @@ DashCalendarTimeline.defaultProps = {
   customItemsContent: [],
   customGroups: false,
   customItems: false,
+  disableHorizontalScroll: false,
   draggingItemColor: "red",
   selectedItemColor: "#1a6fb3",
   resizingItemBorder: "2px solid red",
@@ -641,6 +683,11 @@ DashCalendarTimeline.propTypes = {
        }
      */
     timeSteps: PropTypes.object,
+
+    /**
+     * Disable the horizontal scroll. Default is False.
+     */
+    disableHorizontalScroll: PropTypes.bool,
 
     /**
      * This will determine whether you'd want to set up custom content for items or not. 
@@ -796,6 +843,11 @@ DashCalendarTimeline.propTypes = {
      * This is sent on the first click on an item. time is the time that corresponds to where you click/select on the item in the timeline.
      */
     itemSelectData: PropTypes.object,
+
+    /**
+     * Get the dimensions for the currently rendered items. Warning: Use this prop to render custom items on a fixed timeline only. Disable horizontal scroll, moving, zooming and resizing as it will re-render the timeline on every single event for items.
+     */
+    itemDimensions: PropTypes.object,
 
     /**
      * Called when an empty spot on the canvas was clicked. Get the group ID and the time as arguments. For example open a "new item" window after this.

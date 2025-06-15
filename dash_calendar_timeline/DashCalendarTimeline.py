@@ -115,6 +115,9 @@ Keyword arguments:
 - defaultTimeStart (number; optional):
     This sets the start time for the timeline.
 
+- disableHorizontalScroll (boolean; default False):
+    Disable the horizontal scroll. Default is False.
+
 - dragInfoLabel (boolean; default False):
     This will render a info label over the timeline while the item is
     being dragged around.
@@ -153,6 +156,12 @@ Keyword arguments:
     time is the time that corresponds to where you context click on
     the item in the timeline. Note: If this property is set the
     default context menu doesn't appear.
+
+- itemDimensions (dict; optional):
+    Get the dimensions for the currently rendered items. Warning: Use
+    this prop to render custom items on a fixed timeline only. Disable
+    horizontal scroll, moving, zooming and resizing as it will
+    re-render the timeline on every single event for items.
 
 - itemDoubleClickData (dict; optional):
     Called when an item was double clicked. time is the time that
@@ -293,6 +302,7 @@ Keyword arguments:
         traditionalZoom: typing.Optional[bool] = None,
         itemTouchSendsClick: typing.Optional[bool] = None,
         timeSteps: typing.Optional[dict] = None,
+        disableHorizontalScroll: typing.Optional[bool] = None,
         customItems: typing.Optional[bool] = None,
         customGroups: typing.Optional[bool] = None,
         customItemsContent: typing.Optional[ComponentType] = None,
@@ -323,6 +333,7 @@ Keyword arguments:
         itemDoubleClickData: typing.Optional[dict] = None,
         itemContextMenuData: typing.Optional[dict] = None,
         itemSelectData: typing.Optional[dict] = None,
+        itemDimensions: typing.Optional[dict] = None,
         canvasClickData: typing.Optional[dict] = None,
         canvasDoubleClickData: typing.Optional[dict] = None,
         canvasContextMenuData: typing.Optional[dict] = None,
@@ -330,9 +341,9 @@ Keyword arguments:
         boundsChangeData: typing.Optional[dict] = None,
         **kwargs
     ):
-        self._prop_names = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'cursorMarkerStyle', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'customMarkers', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'showCursorMarker', 'showTodayMarker', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'todayMarkerInterval', 'todayMarkerStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
+        self._prop_names = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'cursorMarkerStyle', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'customMarkers', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'disableHorizontalScroll', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDimensions', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'showCursorMarker', 'showTodayMarker', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'todayMarkerInterval', 'todayMarkerStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'cursorMarkerStyle', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'customMarkers', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'showCursorMarker', 'showTodayMarker', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'todayMarkerInterval', 'todayMarkerStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
+        self.available_properties = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'cursorMarkerStyle', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'customMarkers', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'disableHorizontalScroll', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDimensions', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'showCursorMarker', 'showTodayMarker', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'todayMarkerInterval', 'todayMarkerStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()

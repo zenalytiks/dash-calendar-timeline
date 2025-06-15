@@ -20,18 +20,20 @@ customItemsContent=NULL, customMarkers=NULL,
 dateHeaderHeight=NULL, dateHeaderLabelFormat=NULL,
 dateHeaderStyle=NULL, dateHeaderUnit=NULL,
 defaultTimeEnd=NULL, defaultTimeStart=NULL,
-dragInfoLabel=NULL, dragInfoLabelStyle=NULL, dragSnap=NULL,
+disableHorizontalScroll=NULL, dragInfoLabel=NULL,
+dragInfoLabelStyle=NULL, dragSnap=NULL,
 draggingItemColor=NULL, groups=NULL, groupsClass=NULL,
 groupsStyle=NULL, itemClickData=NULL,
-itemContextMenuData=NULL, itemDoubleClickData=NULL,
-itemHeightRatio=NULL, itemSelectData=NULL,
-itemTouchSendsClick=NULL, items=NULL, itemsClass=NULL,
-itemsStyle=NULL, lineHeight=NULL, maxZoom=NULL,
-minResizeWidth=NULL, minZoom=NULL, resizingItemBorder=NULL,
-rightSidebarWidth=NULL, selectedItemColor=NULL,
-showCursorMarker=NULL, showTodayMarker=NULL,
-sidebarHeaderContent=NULL, sidebarHeaderVariant=NULL,
-sidebarWidth=NULL, timeSteps=NULL, timelineHeaderStyle=NULL,
+itemContextMenuData=NULL, itemDimensions=NULL,
+itemDoubleClickData=NULL, itemHeightRatio=NULL,
+itemSelectData=NULL, itemTouchSendsClick=NULL, items=NULL,
+itemsClass=NULL, itemsStyle=NULL, lineHeight=NULL,
+maxZoom=NULL, minResizeWidth=NULL, minZoom=NULL,
+resizingItemBorder=NULL, rightSidebarWidth=NULL,
+selectedItemColor=NULL, showCursorMarker=NULL,
+showTodayMarker=NULL, sidebarHeaderContent=NULL,
+sidebarHeaderVariant=NULL, sidebarWidth=NULL,
+timeSteps=NULL, timelineHeaderStyle=NULL,
 todayMarkerInterval=NULL, todayMarkerStyle=NULL,
 traditionalZoom=NULL, useResizeHandle=NULL,
 visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
@@ -87,6 +89,8 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
 
 \item{defaultTimeStart}{Numeric. This sets the start time for the timeline.}
 
+\item{disableHorizontalScroll}{Logical. Disable the horizontal scroll. Default is False.}
+
 \item{dragInfoLabel}{Logical. This will render a info label over the timeline while the item is being dragged around.}
 
 \item{dragInfoLabelStyle}{Named list. Style applied to the dragInfoLabel.}
@@ -104,6 +108,8 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
 \item{itemClickData}{Named list. Called when an item is clicked. Note: the item must be selected before it's clicked... except if it's a touch event and itemTouchSendsClick is enabled. time is the time that corresponds to where you click on the item in the timeline.}
 
 \item{itemContextMenuData}{Named list. Called when the item is clicked by the right button of the mouse. time is the time that corresponds to where you context click on the item in the timeline. Note: If this property is set the default context menu doesn't appear.}
+
+\item{itemDimensions}{Named list. Get the dimensions for the currently rendered items. Warning: Use this prop to render custom items on a fixed timeline only. Disable horizontal scroll, moving, zooming and resizing as it will re-render the timeline on every single event for items.}
 
 \item{itemDoubleClickData}{Named list. Called when an item was double clicked. time is the time that corresponds to where you double click on the item in the timeline.}
 

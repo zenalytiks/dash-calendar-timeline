@@ -35,6 +35,7 @@ Keyword arguments:
 - `dateHeaderUnit` (String; optional): Determines the intervals between columns. Values can be second, minute, hour, day, week, month, year or primaryHeader.
 - `defaultTimeEnd` (Real; optional): This sets the end time for the timeline.
 - `defaultTimeStart` (Real; optional): This sets the start time for the timeline.
+- `disableHorizontalScroll` (Bool; optional): Disable the horizontal scroll. Default is False.
 - `dragInfoLabel` (Bool; optional): This will render a info label over the timeline while the item is being dragged around.
 - `dragInfoLabelStyle` (Dict; optional): Style applied to the dragInfoLabel.
 - `dragSnap` (Real; optional): Snapping unit when dragging items. Defaults to 15 * 60 * 1000 or 15min. When so, the items will snap to 15min intervals when dragging.
@@ -44,6 +45,7 @@ Keyword arguments:
 - `groupsStyle` (Dict; optional): This will be used to set up custom css style of content of groups in the sidebar.
 - `itemClickData` (Dict; optional): Called when an item is clicked. Note: the item must be selected before it's clicked... except if it's a touch event and itemTouchSendsClick is enabled. time is the time that corresponds to where you click on the item in the timeline.
 - `itemContextMenuData` (Dict; optional): Called when the item is clicked by the right button of the mouse. time is the time that corresponds to where you context click on the item in the timeline. Note: If this property is set the default context menu doesn't appear.
+- `itemDimensions` (Dict; optional): Get the dimensions for the currently rendered items. Warning: Use this prop to render custom items on a fixed timeline only. Disable horizontal scroll, moving, zooming and resizing as it will re-render the timeline on every single event for items.
 - `itemDoubleClickData` (Dict; optional): Called when an item was double clicked. time is the time that corresponds to where you double click on the item in the timeline.
 - `itemHeightRatio` (Real; optional): What percentage of the height of the line is taken by the item? Default 0.65
 - `itemSelectData` (Dict; optional): This is sent on the first click on an item. time is the time that corresponds to where you click/select on the item in the timeline.
@@ -83,7 +85,7 @@ Default:
 - `zoomData` (Dict; optional): Called when the timeline is zoomed, either via mouse/pinch zoom or clicking header to change timeline units.
 """
 function ''_dashcalendartimeline(; kwargs...)
-        available_props = Symbol[:id, :boundsChangeData, :buffer, :canChangeGroup, :canMove, :canResize, :canvasClickData, :canvasContextMenuData, :canvasDoubleClickData, :clickTolerance, :cursorMarkerStyle, :customGroups, :customGroupsContent, :customItems, :customItemsContent, :customMarkers, :dateHeaderHeight, :dateHeaderLabelFormat, :dateHeaderStyle, :dateHeaderUnit, :defaultTimeEnd, :defaultTimeStart, :dragInfoLabel, :dragInfoLabelStyle, :dragSnap, :draggingItemColor, :groups, :groupsClass, :groupsStyle, :itemClickData, :itemContextMenuData, :itemDoubleClickData, :itemHeightRatio, :itemSelectData, :itemTouchSendsClick, :items, :itemsClass, :itemsStyle, :lineHeight, :maxZoom, :minResizeWidth, :minZoom, :resizingItemBorder, :rightSidebarWidth, :selectedItemColor, :showCursorMarker, :showTodayMarker, :sidebarHeaderContent, :sidebarHeaderVariant, :sidebarWidth, :timeSteps, :timelineHeaderStyle, :todayMarkerInterval, :todayMarkerStyle, :traditionalZoom, :useResizeHandle, :visibleTimeEnd, :visibleTimeStart, :zoomData]
+        available_props = Symbol[:id, :boundsChangeData, :buffer, :canChangeGroup, :canMove, :canResize, :canvasClickData, :canvasContextMenuData, :canvasDoubleClickData, :clickTolerance, :cursorMarkerStyle, :customGroups, :customGroupsContent, :customItems, :customItemsContent, :customMarkers, :dateHeaderHeight, :dateHeaderLabelFormat, :dateHeaderStyle, :dateHeaderUnit, :defaultTimeEnd, :defaultTimeStart, :disableHorizontalScroll, :dragInfoLabel, :dragInfoLabelStyle, :dragSnap, :draggingItemColor, :groups, :groupsClass, :groupsStyle, :itemClickData, :itemContextMenuData, :itemDimensions, :itemDoubleClickData, :itemHeightRatio, :itemSelectData, :itemTouchSendsClick, :items, :itemsClass, :itemsStyle, :lineHeight, :maxZoom, :minResizeWidth, :minZoom, :resizingItemBorder, :rightSidebarWidth, :selectedItemColor, :showCursorMarker, :showTodayMarker, :sidebarHeaderContent, :sidebarHeaderVariant, :sidebarWidth, :timeSteps, :timelineHeaderStyle, :todayMarkerInterval, :todayMarkerStyle, :traditionalZoom, :useResizeHandle, :visibleTimeEnd, :visibleTimeStart, :zoomData]
         wild_props = Symbol[]
         return Component("''_dashcalendartimeline", "DashCalendarTimeline", "dash_calendar_timeline", available_props, wild_props; kwargs...)
 end
