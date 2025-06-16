@@ -67,7 +67,7 @@ class CFBGuideApp:
                     sidebarWidth=100,
                     lineHeight=60,
                     itemHeightRatio=1,
-                    disableHorizontalScroll=True,
+                    disableScroll=True,
                     canMove=False,
                     canResize=False,
                     canChangeGroup=False,
@@ -75,9 +75,6 @@ class CFBGuideApp:
                     sidebarHeaderContent=html.H3("Station", className='text-center'),
                     customGroups=True,
                     customItems=True,
-                    dragInfoLabel=True,
-                    traditionalZoom=False,
-                    selectedItemColor='rgba(50, 245, 39, 0.5)',
                 ),
             ], className='pt-5')
         ], fluid=True, className='p-0')
@@ -284,4 +281,4 @@ class CFBGuideApp:
 # Create and run the application
 if __name__ == '__main__':
     cfb_app = CFBGuideApp()
-    cfb_app.run(debug=True)
+    cfb_app.run(debug=False)

@@ -41,7 +41,7 @@ export default function DashCalendarTimeline(props) {
     traditionalZoom,
     itemTouchSendsClick,
     timeSteps,
-    disableHorizontalScroll,
+    disableScroll,
     customItems,
     customGroups,
     customItemsContent,
@@ -97,10 +97,8 @@ export default function DashCalendarTimeline(props) {
   const [lastVisibleTimeStart, setLastVisibleTimeStart] = useState(visibleTimeStart);
   const [lastVisibleTimeEnd, setLastVisibleTimeEnd] = useState(visibleTimeEnd);
 
-    // Use useRef to track the last dimensions to prevent unnecessary updates
   const lastDimensionsRef = useRef(null);
 
-  // Helper function to compare dimensions objects
   const dimensionsAreEqual = (dim1, dim2) => {
     if (!dim1 && !dim2) return true;
     if (!dim1 || !dim2) return false;
@@ -284,7 +282,7 @@ export default function DashCalendarTimeline(props) {
 
   const handleTimeChange = (newVisibleTimeStart, newVisibleTimeEnd, updateScrollCanvas) => {
 
-    if (disableHorizontalScroll) {
+    if (disableScroll) {
       return;
     }
     setLocalVisibleTimeStart(newVisibleTimeStart);
@@ -298,14 +296,12 @@ export default function DashCalendarTimeline(props) {
   const itemRenderer = ({ item, itemContext, getItemProps, getResizeProps }) => {
     const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
 
-    // Only update dimensions if they have actually changed
     const currentDimensions = itemContext.dimensions ? {
       width: itemContext.dimensions.width,
       height: itemContext.dimensions.height
     } : null;
     if (currentDimensions && !dimensionsAreEqual(currentDimensions, lastDimensionsRef.current)) {
       lastDimensionsRef.current = currentDimensions;
-      // Use setTimeout to avoid updating state during render
       setTimeout(() => {
         setCurrentItemDimensions(currentDimensions);
       }, 0);
@@ -541,7 +537,7 @@ DashCalendarTimeline.defaultProps = {
   customItemsContent: [],
   customGroups: false,
   customItems: false,
-  disableHorizontalScroll: false,
+  disableScroll: false,
   draggingItemColor: "red",
   selectedItemColor: "#1a6fb3",
   resizingItemBorder: "2px solid red",
@@ -685,9 +681,9 @@ DashCalendarTimeline.propTypes = {
     timeSteps: PropTypes.object,
 
     /**
-     * Disable the horizontal scroll. Default is False.
+     * Disable the scrolling of timeline. Default is False.
      */
-    disableHorizontalScroll: PropTypes.bool,
+    disableScroll: PropTypes.bool,
 
     /**
      * This will determine whether you'd want to set up custom content for items or not. 
@@ -845,7 +841,7 @@ DashCalendarTimeline.propTypes = {
     itemSelectData: PropTypes.object,
 
     /**
-     * Get the dimensions for the currently rendered items. Warning: Use this prop to render custom items on a fixed timeline only. Disable horizontal scroll, moving, zooming and resizing as it will re-render the timeline on every single event for items.
+     * Get the dimensions for the currently rendered items. Warning: Use this prop to render custom items on a fixed timeline only. Disable scrolling, moving and resizing as it will re-render the timeline on every single event for items.
      */
     itemDimensions: PropTypes.object,
 

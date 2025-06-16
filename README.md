@@ -99,6 +99,9 @@ A custom component for rendering react-calendar-timeline in Dash Apps.
 #### defaultTimeStart (number; optional):
     This sets the start time for the timeline.
 
+#### disableHorizontalScroll (boolean; default False):
+    Disable the horizontal scroll. Default is False.
+
 #### dragInfoLabel (boolean; default False):
     This will render a info label over the timeline while the item is
     being dragged around.
@@ -141,6 +144,12 @@ A custom component for rendering react-calendar-timeline in Dash Apps.
 #### itemDoubleClickData (dict; optional):
     Called when an item was double clicked. time is the time that
     corresponds to where you double click on the item in the timeline.
+
+#### itemDimensions (dict; optional):
+    Get the dimensions for the currently rendered items. 
+    Warning: Use this prop to render custom items on a fixed timeline only. 
+    Disable horizontal scroll, moving, zooming and resizing as it will 
+    re-render the timeline on every single event for items.
 
 #### itemHeightRatio (number; optional):
     What percentage of the height of the line is taken by the item?
