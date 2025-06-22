@@ -2,7 +2,9 @@
 
 Dash Calendar Timeline is a Dash component library.
 
-A custom component for rendering react-calendar-timeline in Dash Apps.
+A custom component for rendering ([react-calendar-timeline](https://www.npmjs.com/package/react-calendar-timeline)) in Dash Apps.
+
+![calendar demo](https://raw.githubusercontent.com/namespace-ee/react-calendar-timeline/master/demo.gif)
 
 ## Keyword arguments:
 

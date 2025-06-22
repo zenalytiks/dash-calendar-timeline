@@ -1,6 +1,6 @@
 Package: dashCalendarTimeline
 Title: A custom component for rendering react-calendar-timeline in Dash Apps.
-Version: 0.0.1
+Version: 1.0.0
 Description: A custom component for rendering react-calendar-timeline in Dash Apps.
 Depends: R (>= 3.0.2)
 Imports: 
