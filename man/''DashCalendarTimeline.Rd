@@ -6,7 +6,7 @@
 \title{DashCalendarTimeline component}
 
 \description{
-DashCalendarTimeline renders React's Calendar Timeline inside the Dash App.
+
 }
 
 \usage{

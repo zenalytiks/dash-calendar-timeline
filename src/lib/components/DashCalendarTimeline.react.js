@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import Timeline, { TimelineMarkers,
   CustomMarker,
@@ -14,12 +14,16 @@ import moment from "moment";
 /**
  * DashCalendarTimeline renders React's Calendar Timeline inside the Dash App.
  */
+const DEFAULT_GROUPS = [{}];
+const DEFAULT_ITEMS = [{}];
+const DEFAULT_CUSTOM_ITEMS_CONTENT = [];
+const DEFAULT_CUSTOM_GROUPS_CONTENT = [];
 export default function DashCalendarTimeline(props) {
     const{
     id,
     setProps,
-    groups,
-    items, 
+    groups = DEFAULT_GROUPS,
+    items = DEFAULT_ITEMS,
     defaultTimeStart,
     defaultTimeEnd,
     visibleTimeStart,
@@ -39,21 +43,21 @@ export default function DashCalendarTimeline(props) {
     canResize,
     useResizeHandle,
     traditionalZoom,
-    itemTouchSendsClick,
+    itemTouchSendsClick = false,
     timeSteps,
-    disableScroll,
-    customItems,
-    customGroups,
-    customItemsContent,
-    customGroupsContent,
-    selectedItemColor,
-    draggingItemColor,
-    resizingItemBorder,
+    disableScroll = false,
+    customItems = false,
+    customGroups = false,
+    customItemsContent = DEFAULT_CUSTOM_ITEMS_CONTENT,
+    customGroupsContent = DEFAULT_CUSTOM_GROUPS_CONTENT,
+    selectedItemColor = "#1a6fb3",
+    draggingItemColor = "red",
+    resizingItemBorder = "2px solid red",
     itemsStyle,
     itemsClass,
     groupsStyle,
     groupsClass,
-    dragInfoLabel,
+    dragInfoLabel = false,
     dragInfoLabelStyle,
     sidebarHeaderVariant,
     sidebarHeaderContent,
@@ -62,13 +66,12 @@ export default function DashCalendarTimeline(props) {
     dateHeaderUnit,
     dateHeaderLabelFormat,
     dateHeaderHeight,
-    showTodayMarker,
-    todayMarkerInterval,
+    showTodayMarker = false,
+    todayMarkerInterval = 10000,
     todayMarkerStyle,
     customMarkers,
-    showCursorMarker,
+    showCursorMarker = false,
     cursorMarkerStyle,
-    // eslint-disable-next-line no-unused-vars
     itemClickData,
     itemDoubleClickData,
     itemContextMenuData,
@@ -97,16 +100,12 @@ export default function DashCalendarTimeline(props) {
   const [lastVisibleTimeStart, setLastVisibleTimeStart] = useState(visibleTimeStart);
   const [lastVisibleTimeEnd, setLastVisibleTimeEnd] = useState(visibleTimeEnd);
 
-  const lastDimensionsRef = useRef(null);
+  const lastDimensionsStringRef = useRef('');
+  const pendingDimensionsRef = useRef(null);
 
-  const dimensionsAreEqual = (dim1, dim2) => {
-    if (!dim1 && !dim2) return true;
-    if (!dim1 || !dim2) return false;
-    
-    return (
-      dim1.width === dim2.width &&
-      dim1.height === dim2.height
-    );
+  const getDimensionsString = (dimensions) => {
+    if (!dimensions) return '';
+    return `${dimensions.width}x${dimensions.height}`;
   };
 
   const itemsHaveChanged = (newItems, oldItems) => {
@@ -152,11 +151,20 @@ export default function DashCalendarTimeline(props) {
     setLastVisibleTimeEnd(visibleTimeEnd);
   }, [visibleTimeStart, visibleTimeEnd, lastVisibleTimeStart, lastVisibleTimeEnd, localVisibleTimeStart, localVisibleTimeEnd]);
 
-  useEffect (() => {
-    setProps({
+  const stableSetProps = useCallback(setProps, []);
+  
+  useEffect(() => {
+    stableSetProps({
       itemDimensions: currentItemDimensions
-    })
-  }, [currentItemDimensions, setProps])
+    });
+  }, [currentItemDimensions, stableSetProps]);
+
+  useEffect(() => {
+    if (pendingDimensionsRef.current) {
+      setCurrentItemDimensions(pendingDimensionsRef.current);
+      pendingDimensionsRef.current = null;
+    }
+  });
 
   const handleItemClick = (itemId, e, time) => {
     const updatedClickData = {
@@ -293,37 +301,33 @@ export default function DashCalendarTimeline(props) {
 
   };
 
-  const itemRenderer = ({ item, itemContext, getItemProps, getResizeProps }) => {
+  const itemRenderer = useCallback(({ item, itemContext, getItemProps, getResizeProps }) => {
     const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
 
     const currentDimensions = itemContext.dimensions ? {
       width: itemContext.dimensions.width,
       height: itemContext.dimensions.height
     } : null;
-    if (currentDimensions && !dimensionsAreEqual(currentDimensions, lastDimensionsRef.current)) {
-      lastDimensionsRef.current = currentDimensions;
-      setTimeout(() => {
-        setCurrentItemDimensions(currentDimensions);
-      }, 0);
+    
+    const currentDimensionsString = getDimensionsString(currentDimensions);
+    
+    if (currentDimensions && currentDimensionsString !== lastDimensionsStringRef.current) {
+      lastDimensionsStringRef.current = currentDimensionsString;
+      pendingDimensionsRef.current = currentDimensions;
     }
     
-    const backgroundColor = itemContext.selected 
-                              ? (itemContext.dragging 
-                                  ? draggingItemColor : selectedItemColor
-                                ) 
-                              : getItemProps(item.itemProps).style.background;
-    const borderResizing = itemContext.resizing ? resizingItemBorder : getItemProps(item.itemProps).style.border;
+    const itemProps = getItemProps(item.itemProps);
+
+    if (itemContext.selected) {
+      itemProps.style.background = itemContext.dragging ? draggingItemColor : selectedItemColor;
+    }
+
+    if (itemContext.resizing) {
+      itemProps.style.border = resizingItemBorder;
+    }
+    
+    const modifiedItemProps = itemProps;
   
-    const modifiedItemProps = {
-      ...getItemProps(item.itemProps),
-      style: {
-        ...getItemProps(item.itemProps).style,
-        background: backgroundColor,
-        border: borderResizing
-      }
-    };
-  
-    // Get the index of current item to access corresponding custom content
     const itemIndex = currentItems.findIndex(i => i.id === item.id);
     const customContent = customItems && customItemsContent[itemIndex] 
       ? customItemsContent[itemIndex] 
@@ -340,10 +344,9 @@ export default function DashCalendarTimeline(props) {
         {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : ''}
       </div>
     );
-  };
+  }, [currentItems, customItems, customItemsContent, itemsStyle, itemsClass, draggingItemColor, selectedItemColor, resizingItemBorder]);
   
-  const groupRenderer = ({ group }) => {
-    // Get the index of current group to access corresponding custom content
+  const groupRenderer = useCallback(({ group }) => {
     const groupIndex = groups.findIndex(g => g.id === group.id);
     const customContent = customGroups && customGroupsContent[groupIndex] 
       ? customGroupsContent[groupIndex] 
@@ -356,7 +359,7 @@ export default function DashCalendarTimeline(props) {
           : group.title}
       </div>
     );
-  }
+  }, [groups, customGroups, customGroupsContent, groupsStyle, groupsClass]);
 
   const handleItemMove = (itemId, dragTime, newGroupOrder) => {
     const updatedItems = currentItems.map((item) =>
@@ -469,8 +472,8 @@ export default function DashCalendarTimeline(props) {
             onItemDrag={handleItemDrag}
             onTimeChange={handleTimeChange}
             onBoundsChange={handleBoundsChange}
-            itemRenderer = {itemRenderer}
-            groupRenderer = {groupRenderer}
+            itemRenderer={itemRenderer}
+            groupRenderer={groupRenderer}
 
             >
             <TimelineMarkers>
@@ -529,23 +532,6 @@ export default function DashCalendarTimeline(props) {
       </div>
   );
 }
-
-DashCalendarTimeline.defaultProps = {
-  groups: [{}],
-  items: [{}],
-  customGroupsContent: [],
-  customItemsContent: [],
-  customGroups: false,
-  customItems: false,
-  disableScroll: false,
-  draggingItemColor: "red",
-  selectedItemColor: "#1a6fb3",
-  resizingItemBorder: "2px solid red",
-  dragInfoLabel: false,
-  showTodayMarker: false,
-  todayMarkerInterval: 10000,
-  showCursorMarker: false
-};
 
 DashCalendarTimeline.propTypes = {
     /**

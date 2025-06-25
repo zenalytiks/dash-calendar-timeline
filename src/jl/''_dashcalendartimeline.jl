@@ -6,7 +6,7 @@ export ''_dashcalendartimeline
     ''_dashcalendartimeline(;kwargs...)
 
 A DashCalendarTimeline component.
-DashCalendarTimeline renders React's Calendar Timeline inside the Dash App.
+
 Keyword arguments:
 - `id` (String; optional): The ID used to identify this component in Dash callbacks.
 - `boundsChangeData` (Dict; optional): Called when the bounds in the calendar's canvas change. Use it for example to load new data to display. (see "Behind the scenes" below). canvasTimeStart and canvasTimeEnd are unix timestamps in milliseconds.

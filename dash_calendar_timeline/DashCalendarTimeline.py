@@ -20,7 +20,7 @@ NumberType = typing.Union[
 
 class DashCalendarTimeline(Component):
     """A DashCalendarTimeline component.
-DashCalendarTimeline renders React's Calendar Timeline inside the Dash App.
+
 
 Keyword arguments:
 
@@ -74,7 +74,7 @@ Keyword arguments:
 - cursorMarkerStyle (dict; optional):
     Use this to render special styles for the cursorMarker.
 
-- customGroups (boolean; default False):
+- customGroups (boolean; optional):
     This will determine whether you'd want to set up custom content
     for groups or not.
 
@@ -82,7 +82,7 @@ Keyword arguments:
     This will be used to set up custom content of groups in the
     sidebar.
 
-- customItems (boolean; default False):
+- customItems (boolean; optional):
     This will determine whether you'd want to set up custom content
     for items or not.
 
@@ -115,10 +115,10 @@ Keyword arguments:
 - defaultTimeStart (number; optional):
     This sets the start time for the timeline.
 
-- disableScroll (boolean; default False):
+- disableScroll (boolean; optional):
     Disable the scrolling of timeline. Default is False.
 
-- dragInfoLabel (boolean; default False):
+- dragInfoLabel (boolean; optional):
     This will render a info label over the timeline while the item is
     being dragged around.
 
@@ -130,10 +130,10 @@ Keyword arguments:
     15min. When so, the items will snap to 15min intervals when
     dragging.
 
-- draggingItemColor (string; default "red"):
+- draggingItemColor (string; optional):
     Item color while the item is being dragged around.
 
-- groups (list; default [{}]):
+- groups (list; optional):
     The groups are used to determine the number of groups in a
     Timeline.
 
@@ -181,7 +181,7 @@ Keyword arguments:
     click and then clicking again to open and send the onItemClick
     event. Defaults to False.
 
-- items (list; default [{}]):
+- items (list; optional):
     The items are used to determine the number of items within a
     single group.
 
@@ -209,7 +209,7 @@ Keyword arguments:
     Smallest time the calendar can zoom to in milliseconds. Default 60
     * 60 * 1000 (1 hour).
 
-- resizingItemBorder (string; default "2px solid red"):
+- resizingItemBorder (string; optional):
     Item border (CSS border e.g, 2px solid red) while the item is
     being resized.
 
@@ -217,14 +217,14 @@ Keyword arguments:
     Width of the right sidebar in pixels. If set to 0, the right
     sidebar is not rendered. Defaults to 0.
 
-- selectedItemColor (string; default "#1a6fb3"):
+- selectedItemColor (string; optional):
     Item color when item is selected.
 
-- showCursorMarker (boolean; default False):
+- showCursorMarker (boolean; optional):
     Marker that is displayed when hovering over the timeline and
     matches where your cursor is.
 
-- showTodayMarker (boolean; default False):
+- showTodayMarker (boolean; optional):
     Marker that is placed on the current date/time.
 
 - sidebarHeaderContent (a list of or a singular dash component, string or number; optional):
@@ -247,7 +247,7 @@ Keyword arguments:
 - timelineHeaderStyle (dict; optional):
     Style applied to the root component of headers.
 
-- todayMarkerInterval (number; default 10000):
+- todayMarkerInterval (number; optional):
     How often the TodayMarker refreshes. Value represents
     milliseconds. Default is 10000.
 
