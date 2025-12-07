@@ -1,5 +1,7 @@
 # Dash Calendar Timeline
 
+[![PyPI Downloads](https://static.pepy.tech/badge/dash-calendar-timeline)](https://pepy.tech/projects/dash-calendar-timeline)
+
 Dash Calendar Timeline is a Dash component library.
 
 A custom component for rendering ([react-calendar-timeline](https://www.npmjs.com/package/react-calendar-timeline)) in Dash Apps.
