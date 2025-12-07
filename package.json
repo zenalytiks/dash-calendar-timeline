@@ -1,6 +1,6 @@
 {
   "name": "dash_calendar_timeline",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A custom component for rendering react-calendar-timeline in Dash Apps.",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "build": "npm run build:js && npm run build:backends",
     "build:activated": "npm run build:js && npm run build:backends-activated"
   },
-  "author": "Waleed Malik <waleed@zenalytiks.com>",
+  "author": "Waleed Malik <zenalytiks@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "moment": "^2.30.1",

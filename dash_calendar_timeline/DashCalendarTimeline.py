@@ -96,19 +96,6 @@ Keyword arguments:
     {'date': 1750675200000, 'style':{'backgorund-color':'green'}},
     {'date': 1751467500000, 'style':{'backgorund-color':'blue'}},  ].
 
-- dateHeaderHeight (number; optional):
-    Determines the height of the header in pixels. Default 30.
-
-- dateHeaderLabelFormat (string; optional):
-    Controls the how to format the interval label.
-
-- dateHeaderStyle (dict; optional):
-    Style applied to the root of the header.
-
-- dateHeaderUnit (string; optional):
-    Determines the intervals between columns. Values can be second,
-    minute, hour, day, week, month, year or primaryHeader.
-
 - defaultTimeEnd (number; optional):
     This sets the end time for the timeline.
 
@@ -209,6 +196,21 @@ Keyword arguments:
     Smallest time the calendar can zoom to in milliseconds. Default 60
     * 60 * 1000 (1 hour).
 
+- primaryDateHeaderHeight (number; optional):
+    Determines the height of the primary header in pixels. Default 30.
+
+- primaryDateHeaderLabelFormat (string; optional):
+    Controls the how to format the interval label of the primary
+    header.
+
+- primaryDateHeaderStyle (dict; optional):
+    Style applied to the root of the primary header.
+
+- primaryDateHeaderUnit (string; optional):
+    Determines the intervals between columns of the primary header.
+    Values can be second, minute, hour, day, week, month, year or
+    primaryHeader.
+
 - resizingItemBorder (string; optional):
     Item border (CSS border e.g, 2px solid red) while the item is
     being resized.
@@ -216,6 +218,22 @@ Keyword arguments:
 - rightSidebarWidth (number; optional):
     Width of the right sidebar in pixels. If set to 0, the right
     sidebar is not rendered. Defaults to 0.
+
+- secondaryDateHeaderHeight (number; optional):
+    Determines the height of the secondary header in pixels. Default
+    30.
+
+- secondaryDateHeaderLabelFormat (string; optional):
+    Controls the how to format the interval label of the secondary
+    header.
+
+- secondaryDateHeaderStyle (dict; optional):
+    Style applied to the root of the secondary header.
+
+- secondaryDateHeaderUnit (string; optional):
+    Determines the intervals between columns of the secondary header.
+    Values can be second, minute, hour, day, week, month, year or
+    primaryHeader.
 
 - selectedItemColor (string; optional):
     Item color when item is selected.
@@ -325,10 +343,14 @@ Keyword arguments:
         sidebarHeaderVariant: typing.Optional[str] = None,
         sidebarHeaderContent: typing.Optional[ComponentType] = None,
         timelineHeaderStyle: typing.Optional[dict] = None,
-        dateHeaderStyle: typing.Optional[dict] = None,
-        dateHeaderUnit: typing.Optional[str] = None,
-        dateHeaderLabelFormat: typing.Optional[str] = None,
-        dateHeaderHeight: typing.Optional[NumberType] = None,
+        primaryDateHeaderStyle: typing.Optional[dict] = None,
+        primaryDateHeaderUnit: typing.Optional[str] = None,
+        primaryDateHeaderLabelFormat: typing.Optional[str] = None,
+        primaryDateHeaderHeight: typing.Optional[NumberType] = None,
+        secondaryDateHeaderStyle: typing.Optional[dict] = None,
+        secondaryDateHeaderUnit: typing.Optional[str] = None,
+        secondaryDateHeaderLabelFormat: typing.Optional[str] = None,
+        secondaryDateHeaderHeight: typing.Optional[NumberType] = None,
         itemClickData: typing.Optional[dict] = None,
         itemDoubleClickData: typing.Optional[dict] = None,
         itemContextMenuData: typing.Optional[dict] = None,
@@ -341,9 +363,9 @@ Keyword arguments:
         boundsChangeData: typing.Optional[dict] = None,
         **kwargs
     ):
-        self._prop_names = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'cursorMarkerStyle', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'customMarkers', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'disableScroll', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDimensions', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'showCursorMarker', 'showTodayMarker', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'todayMarkerInterval', 'todayMarkerStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
+        self._prop_names = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'cursorMarkerStyle', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'customMarkers', 'defaultTimeEnd', 'defaultTimeStart', 'disableScroll', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDimensions', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'primaryDateHeaderHeight', 'primaryDateHeaderLabelFormat', 'primaryDateHeaderStyle', 'primaryDateHeaderUnit', 'resizingItemBorder', 'rightSidebarWidth', 'secondaryDateHeaderHeight', 'secondaryDateHeaderLabelFormat', 'secondaryDateHeaderStyle', 'secondaryDateHeaderUnit', 'selectedItemColor', 'showCursorMarker', 'showTodayMarker', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'todayMarkerInterval', 'todayMarkerStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'cursorMarkerStyle', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'customMarkers', 'dateHeaderHeight', 'dateHeaderLabelFormat', 'dateHeaderStyle', 'dateHeaderUnit', 'defaultTimeEnd', 'defaultTimeStart', 'disableScroll', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDimensions', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'resizingItemBorder', 'rightSidebarWidth', 'selectedItemColor', 'showCursorMarker', 'showTodayMarker', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'todayMarkerInterval', 'todayMarkerStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
+        self.available_properties = ['id', 'boundsChangeData', 'buffer', 'canChangeGroup', 'canMove', 'canResize', 'canvasClickData', 'canvasContextMenuData', 'canvasDoubleClickData', 'clickTolerance', 'cursorMarkerStyle', 'customGroups', 'customGroupsContent', 'customItems', 'customItemsContent', 'customMarkers', 'defaultTimeEnd', 'defaultTimeStart', 'disableScroll', 'dragInfoLabel', 'dragInfoLabelStyle', 'dragSnap', 'draggingItemColor', 'groups', 'groupsClass', 'groupsStyle', 'itemClickData', 'itemContextMenuData', 'itemDimensions', 'itemDoubleClickData', 'itemHeightRatio', 'itemSelectData', 'itemTouchSendsClick', 'items', 'itemsClass', 'itemsStyle', 'lineHeight', 'maxZoom', 'minResizeWidth', 'minZoom', 'primaryDateHeaderHeight', 'primaryDateHeaderLabelFormat', 'primaryDateHeaderStyle', 'primaryDateHeaderUnit', 'resizingItemBorder', 'rightSidebarWidth', 'secondaryDateHeaderHeight', 'secondaryDateHeaderLabelFormat', 'secondaryDateHeaderStyle', 'secondaryDateHeaderUnit', 'selectedItemColor', 'showCursorMarker', 'showTodayMarker', 'sidebarHeaderContent', 'sidebarHeaderVariant', 'sidebarWidth', 'timeSteps', 'timelineHeaderStyle', 'todayMarkerInterval', 'todayMarkerStyle', 'traditionalZoom', 'useResizeHandle', 'visibleTimeEnd', 'visibleTimeStart', 'zoomData']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()

@@ -17,8 +17,6 @@ canvasDoubleClickData=NULL, clickTolerance=NULL,
 cursorMarkerStyle=NULL, customGroups=NULL,
 customGroupsContent=NULL, customItems=NULL,
 customItemsContent=NULL, customMarkers=NULL,
-dateHeaderHeight=NULL, dateHeaderLabelFormat=NULL,
-dateHeaderStyle=NULL, dateHeaderUnit=NULL,
 defaultTimeEnd=NULL, defaultTimeStart=NULL,
 disableScroll=NULL, dragInfoLabel=NULL,
 dragInfoLabelStyle=NULL, dragSnap=NULL,
@@ -29,7 +27,13 @@ itemDoubleClickData=NULL, itemHeightRatio=NULL,
 itemSelectData=NULL, itemTouchSendsClick=NULL, items=NULL,
 itemsClass=NULL, itemsStyle=NULL, lineHeight=NULL,
 maxZoom=NULL, minResizeWidth=NULL, minZoom=NULL,
+primaryDateHeaderHeight=NULL,
+primaryDateHeaderLabelFormat=NULL,
+primaryDateHeaderStyle=NULL, primaryDateHeaderUnit=NULL,
 resizingItemBorder=NULL, rightSidebarWidth=NULL,
+secondaryDateHeaderHeight=NULL,
+secondaryDateHeaderLabelFormat=NULL,
+secondaryDateHeaderStyle=NULL, secondaryDateHeaderUnit=NULL,
 selectedItemColor=NULL, showCursorMarker=NULL,
 showTodayMarker=NULL, sidebarHeaderContent=NULL,
 sidebarHeaderVariant=NULL, sidebarWidth=NULL,
@@ -76,14 +80,6 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
    {'date': 1750675200000, 'style':{'backgorund-color':'green'}},
    {'date': 1751467500000, 'style':{'backgorund-color':'blue'}},
 ]}
-
-\item{dateHeaderHeight}{Numeric. Determines the height of the header in pixels. Default 30.}
-
-\item{dateHeaderLabelFormat}{Character. Controls the how to format the interval label}
-
-\item{dateHeaderStyle}{Named list. Style applied to the root of the header.}
-
-\item{dateHeaderUnit}{Character. Determines the intervals between columns. Values can be second, minute, hour, day, week, month, year or primaryHeader.}
 
 \item{defaultTimeEnd}{Numeric. This sets the end time for the timeline.}
 
@@ -133,9 +129,25 @@ visibleTimeEnd=NULL, visibleTimeStart=NULL, zoomData=NULL)
 
 \item{minZoom}{Numeric. Smallest time the calendar can zoom to in milliseconds. Default 60 * 60 * 1000 (1 hour)}
 
+\item{primaryDateHeaderHeight}{Numeric. Determines the height of the primary header in pixels. Default 30.}
+
+\item{primaryDateHeaderLabelFormat}{Character. Controls the how to format the interval label of the primary header.}
+
+\item{primaryDateHeaderStyle}{Named list. Style applied to the root of the primary header.}
+
+\item{primaryDateHeaderUnit}{Character. Determines the intervals between columns of the primary header. Values can be second, minute, hour, day, week, month, year or primaryHeader.}
+
 \item{resizingItemBorder}{Character. Item border (CSS border e.g, 2px solid red) while the item is being resized.}
 
 \item{rightSidebarWidth}{Numeric. Width of the right sidebar in pixels. If set to 0, the right sidebar is not rendered. Defaults to 0.}
+
+\item{secondaryDateHeaderHeight}{Numeric. Determines the height of the secondary header in pixels. Default 30.}
+
+\item{secondaryDateHeaderLabelFormat}{Character. Controls the how to format the interval label of the secondary header.}
+
+\item{secondaryDateHeaderStyle}{Named list. Style applied to the root of the secondary header.}
+
+\item{secondaryDateHeaderUnit}{Character. Determines the intervals between columns of the secondary header. Values can be second, minute, hour, day, week, month, year or primaryHeader.}
 
 \item{selectedItemColor}{Character. Item color when item is selected.}
 

@@ -62,10 +62,14 @@ export default function DashCalendarTimeline(props) {
     sidebarHeaderVariant,
     sidebarHeaderContent,
     timelineHeaderStyle,
-    dateHeaderStyle,
-    dateHeaderUnit,
-    dateHeaderLabelFormat,
-    dateHeaderHeight,
+    primaryDateHeaderStyle,
+    primaryDateHeaderUnit = 'primaryHeader',
+    primaryDateHeaderLabelFormat,
+    primaryDateHeaderHeight,
+    secondaryDateHeaderStyle,
+    secondaryDateHeaderUnit,
+    secondaryDateHeaderLabelFormat,
+    secondaryDateHeaderHeight,
     showTodayMarker = false,
     todayMarkerInterval = 10000,
     todayMarkerStyle,
@@ -319,11 +323,21 @@ export default function DashCalendarTimeline(props) {
     const itemProps = getItemProps(item.itemProps);
 
     if (itemContext.selected) {
-      itemProps.style.background = itemContext.dragging ? draggingItemColor : selectedItemColor;
+      itemProps.style.background = selectedItemColor;
     }
 
     if (itemContext.resizing) {
       itemProps.style.border = resizingItemBorder;
+    }
+
+    if (itemContext.dragging) {
+      itemProps.style.background = draggingItemColor;
+    }
+
+    if (!itemContext.selected && customItems) {
+      itemProps.style.backgroundColor = "transparent";
+      itemProps.style.border = "none";
+      itemProps.style.color = "#000";
     }
     
     const modifiedItemProps = itemProps;
@@ -513,12 +527,15 @@ export default function DashCalendarTimeline(props) {
               
             </SidebarHeader>
             <DateHeader
-              unit='primaryHeader'/>
+             style={primaryDateHeaderStyle} 
+             unit={primaryDateHeaderUnit}
+             labelFormat={primaryDateHeaderLabelFormat}
+             height={primaryDateHeaderHeight} />
             <DateHeader
-             style={dateHeaderStyle} 
-             unit={dateHeaderUnit}
-             labelFormat={dateHeaderLabelFormat}
-             height={dateHeaderHeight} />
+             style={secondaryDateHeaderStyle} 
+             unit={secondaryDateHeaderUnit}
+             labelFormat={secondaryDateHeaderLabelFormat}
+             height={secondaryDateHeaderHeight} />
            </TimelineHeaders>
             
           </Timeline>
@@ -787,24 +804,44 @@ DashCalendarTimeline.propTypes = {
     timelineHeaderStyle: PropTypes.object,
 
     /**
-     * Style applied to the root of the header.
+     * Style applied to the root of the primary header.
      */
-    dateHeaderStyle: PropTypes.object,
+    primaryDateHeaderStyle: PropTypes.object,
 
     /**
-     * Determines the intervals between columns. Values can be second, minute, hour, day, week, month, year or primaryHeader.
+     * Determines the intervals between columns of the primary header. Values can be second, minute, hour, day, week, month, year or primaryHeader.
      */
-    dateHeaderUnit: PropTypes.string,
+    primaryDateHeaderUnit: PropTypes.string,
 
     /**
-     * Controls the how to format the interval label
+     * Controls the how to format the interval label of the primary header.
      */
-    dateHeaderLabelFormat: PropTypes.string,
+    primaryDateHeaderLabelFormat: PropTypes.string,
 
     /**
-     * Determines the height of the header in pixels. Default 30.
+     * Determines the height of the primary header in pixels. Default 30.
      */
-    dateHeaderHeight: PropTypes.number,
+    primaryDateHeaderHeight: PropTypes.number,
+
+    /**
+     * Style applied to the root of the secondary header.
+     */
+    secondaryDateHeaderStyle: PropTypes.object,
+
+    /**
+     * Determines the intervals between columns of the secondary header. Values can be second, minute, hour, day, week, month, year or primaryHeader.
+     */
+    secondaryDateHeaderUnit: PropTypes.string,
+
+    /**
+     * Controls the how to format the interval label of the secondary header.
+     */
+    secondaryDateHeaderLabelFormat: PropTypes.string,
+
+    /**
+     * Determines the height of the secondary header in pixels. Default 30.
+     */
+    secondaryDateHeaderHeight: PropTypes.number,
 
     /**
      * Called when an item is clicked. Note: the item must be selected before it's clicked... except if it's a touch event and itemTouchSendsClick is enabled. time is the time that corresponds to where you click on the item in the timeline.

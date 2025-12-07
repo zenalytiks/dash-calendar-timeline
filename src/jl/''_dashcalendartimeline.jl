@@ -29,10 +29,6 @@ Keyword arguments:
    {'date': 1750675200000, 'style':{'backgorund-color':'green'}},
    {'date': 1751467500000, 'style':{'backgorund-color':'blue'}},
 ]
-- `dateHeaderHeight` (Real; optional): Determines the height of the header in pixels. Default 30.
-- `dateHeaderLabelFormat` (String; optional): Controls the how to format the interval label
-- `dateHeaderStyle` (Dict; optional): Style applied to the root of the header.
-- `dateHeaderUnit` (String; optional): Determines the intervals between columns. Values can be second, minute, hour, day, week, month, year or primaryHeader.
 - `defaultTimeEnd` (Real; optional): This sets the end time for the timeline.
 - `defaultTimeStart` (Real; optional): This sets the start time for the timeline.
 - `disableScroll` (Bool; optional): Disable the scrolling of timeline. Default is False.
@@ -57,8 +53,16 @@ Keyword arguments:
 - `maxZoom` (Real; optional): Largest time the calendar can zoom to in milliseconds. Default 5 * 365.24 * 86400 * 1000 (5 years)
 - `minResizeWidth` (Real; optional): The minimum width, in pixels, of a timeline entry when it's possible to resize. If not reached, you must zoom in to resize more. Default to 20.
 - `minZoom` (Real; optional): Smallest time the calendar can zoom to in milliseconds. Default 60 * 60 * 1000 (1 hour)
+- `primaryDateHeaderHeight` (Real; optional): Determines the height of the primary header in pixels. Default 30.
+- `primaryDateHeaderLabelFormat` (String; optional): Controls the how to format the interval label of the primary header.
+- `primaryDateHeaderStyle` (Dict; optional): Style applied to the root of the primary header.
+- `primaryDateHeaderUnit` (String; optional): Determines the intervals between columns of the primary header. Values can be second, minute, hour, day, week, month, year or primaryHeader.
 - `resizingItemBorder` (String; optional): Item border (CSS border e.g, 2px solid red) while the item is being resized.
 - `rightSidebarWidth` (Real; optional): Width of the right sidebar in pixels. If set to 0, the right sidebar is not rendered. Defaults to 0.
+- `secondaryDateHeaderHeight` (Real; optional): Determines the height of the secondary header in pixels. Default 30.
+- `secondaryDateHeaderLabelFormat` (String; optional): Controls the how to format the interval label of the secondary header.
+- `secondaryDateHeaderStyle` (Dict; optional): Style applied to the root of the secondary header.
+- `secondaryDateHeaderUnit` (String; optional): Determines the intervals between columns of the secondary header. Values can be second, minute, hour, day, week, month, year or primaryHeader.
 - `selectedItemColor` (String; optional): Item color when item is selected.
 - `showCursorMarker` (Bool; optional): Marker that is displayed when hovering over the timeline and matches where your cursor is.
 - `showTodayMarker` (Bool; optional): Marker that is placed on the current date/time.
@@ -85,7 +89,7 @@ Default:
 - `zoomData` (Dict; optional): Called when the timeline is zoomed, either via mouse/pinch zoom or clicking header to change timeline units.
 """
 function ''_dashcalendartimeline(; kwargs...)
-        available_props = Symbol[:id, :boundsChangeData, :buffer, :canChangeGroup, :canMove, :canResize, :canvasClickData, :canvasContextMenuData, :canvasDoubleClickData, :clickTolerance, :cursorMarkerStyle, :customGroups, :customGroupsContent, :customItems, :customItemsContent, :customMarkers, :dateHeaderHeight, :dateHeaderLabelFormat, :dateHeaderStyle, :dateHeaderUnit, :defaultTimeEnd, :defaultTimeStart, :disableScroll, :dragInfoLabel, :dragInfoLabelStyle, :dragSnap, :draggingItemColor, :groups, :groupsClass, :groupsStyle, :itemClickData, :itemContextMenuData, :itemDimensions, :itemDoubleClickData, :itemHeightRatio, :itemSelectData, :itemTouchSendsClick, :items, :itemsClass, :itemsStyle, :lineHeight, :maxZoom, :minResizeWidth, :minZoom, :resizingItemBorder, :rightSidebarWidth, :selectedItemColor, :showCursorMarker, :showTodayMarker, :sidebarHeaderContent, :sidebarHeaderVariant, :sidebarWidth, :timeSteps, :timelineHeaderStyle, :todayMarkerInterval, :todayMarkerStyle, :traditionalZoom, :useResizeHandle, :visibleTimeEnd, :visibleTimeStart, :zoomData]
+        available_props = Symbol[:id, :boundsChangeData, :buffer, :canChangeGroup, :canMove, :canResize, :canvasClickData, :canvasContextMenuData, :canvasDoubleClickData, :clickTolerance, :cursorMarkerStyle, :customGroups, :customGroupsContent, :customItems, :customItemsContent, :customMarkers, :defaultTimeEnd, :defaultTimeStart, :disableScroll, :dragInfoLabel, :dragInfoLabelStyle, :dragSnap, :draggingItemColor, :groups, :groupsClass, :groupsStyle, :itemClickData, :itemContextMenuData, :itemDimensions, :itemDoubleClickData, :itemHeightRatio, :itemSelectData, :itemTouchSendsClick, :items, :itemsClass, :itemsStyle, :lineHeight, :maxZoom, :minResizeWidth, :minZoom, :primaryDateHeaderHeight, :primaryDateHeaderLabelFormat, :primaryDateHeaderStyle, :primaryDateHeaderUnit, :resizingItemBorder, :rightSidebarWidth, :secondaryDateHeaderHeight, :secondaryDateHeaderLabelFormat, :secondaryDateHeaderStyle, :secondaryDateHeaderUnit, :selectedItemColor, :showCursorMarker, :showTodayMarker, :sidebarHeaderContent, :sidebarHeaderVariant, :sidebarWidth, :timeSteps, :timelineHeaderStyle, :todayMarkerInterval, :todayMarkerStyle, :traditionalZoom, :useResizeHandle, :visibleTimeEnd, :visibleTimeStart, :zoomData]
         wild_props = Symbol[]
         return Component("''_dashcalendartimeline", "DashCalendarTimeline", "dash_calendar_timeline", available_props, wild_props; kwargs...)
 end

@@ -1,0 +1,4 @@
+.react-calendar-timeline .rct-outer {
+    height: 100vh !important;
+    overflow-y: auto;
+}

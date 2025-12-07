@@ -82,19 +82,6 @@ A custom component for rendering ([react-calendar-timeline](https://www.npmjs.co
         {'date': 1751467500000, 'style':{'backgorund-color':'blue'}}
     ]
 
-#### dateHeaderHeight (number; optional):
-    Determines the height of the header in pixels. Default 30.
-
-#### dateHeaderLabelFormat (string; optional):
-    Controls the how to format the interval label.
-
-#### dateHeaderStyle (dict; optional):
-    Style applied to the root of the header.
-
-#### dateHeaderUnit (string; optional):
-    Determines the intervals between columns. Values can be second,
-    minute, hour, day, week, month, year or primaryHeader.
-
 #### defaultTimeEnd (number; optional):
     This sets the end time for the timeline.
 
@@ -195,6 +182,19 @@ A custom component for rendering ([react-calendar-timeline](https://www.npmjs.co
     Smallest time the calendar can zoom to in milliseconds. Default 60
     * 60 * 1000 (1 hour).
 
+#### primaryDateHeaderHeight (number; optional):
+    Determines the height of the primary header in pixels. Default 30.
+
+#### primaryDateHeaderLabelFormat (string; optional):
+    Controls the how to format the interval label of the primary header.
+
+#### primaryDateHeaderStyle (dict; optional):
+    Style applied to the root of the primary header.
+
+#### primaryDateHeaderUnit (string; default "primaryHeader"):
+    Determines the intervals between columns of the primary header. Values can be second,
+    minute, hour, day, week, month, year or primaryHeader.
+
 #### resizingItemBorder (string; default "2px solid red"):
     Item border (CSS border e.g, 2px solid red) while the item is
     being resized.
@@ -202,6 +202,19 @@ A custom component for rendering ([react-calendar-timeline](https://www.npmjs.co
 #### rightSidebarWidth (number; optional):
     Width of the right sidebar in pixels. If set to 0, the right
     sidebar is not rendered. Defaults to 0.
+
+#### secondaryDateHeaderHeight (number; optional):
+    Determines the height of the secondary header in pixels. Default 30.
+
+#### secondaryDateHeaderLabelFormat (string; optional):
+    Controls the how to format the interval label of the secondary header.
+
+#### secondaryDateHeaderStyle (dict; optional):
+    Style applied to the root of the secondary header.
+
+#### secondaryDateHeaderUnit (string; optional):
+    Determines the intervals between columns of the secondary header. Values can be second,
+    minute, hour, day, week, month, year or primaryHeader.
 
 #### selectedItemColor (string; default "#1a6fb3"):
     Item color when item is selected.

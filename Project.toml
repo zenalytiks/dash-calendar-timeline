@@ -1,8 +1,8 @@
 
 name = "DashCalendarTimeline"
 uuid = "1b08a953-4be3-4667-9a23-d86b5adce07a"
-authors = ["Waleed Malik <waleed@zenalytiks.com>"]
-version = "1.0.1"
+authors = ["Waleed Malik <zenalytiks@gmail.com>"]
+version = "1.0.2"
 
 [deps]
 Dash = "1b08a953-4be3-4667-9a23-3db579824955"
